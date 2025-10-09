@@ -1,45 +1,45 @@
-<!-- Authentication Landing Page - Split Layout -->
+<!-- Страница аутентификации - Разделённый макет -->
 <div class="auth-landing-container">
-  <!-- Left Section - Admin -->
+  <!-- Левая секция - Администратор -->
   <div class="auth-section admin-section">
     <div class="section-content">
-      <div class="section-badge">ADMIN</div>
-      <h1 class="section-title">For Administrators</h1>
+      <div class="section-badge">АДМИНИСТРАТОР</div>
+      <h1 class="section-title">Для администраторов</h1>
       <p class="section-description">
-        Manage events, oversee registrations, and coordinate with clubs. Access comprehensive tools to organize and monitor college activities.
+        Управляйте мероприятиями, контролируйте регистрации и взаимодействуйте с клубами. Получите доступ к инструментам для организации и мониторинга активности в университете.
       </p>
-      
+
       <button class="primary-btn" (click)="navigateToAdminLogin()">
-        Admin Login
+        Вход для администратора
       </button>
-      
+
       <div class="bottom-message">
-        <p>Need assistance?</p>
-        <a href="javascript:void(0)" class="link-text" (click)="navigateToSupport($event)">Contact Support</a>
+        <p>Нужна помощь?</p>
+        <a href="javascript:void(0)" class="link-text" (click)="navigateToSupport($event)">Связаться с поддержкой</a>
       </div>
     </div>
   </div>
 
-  <!-- Right Section - Students -->
+  <!-- Правая секция - Студенты -->
   <div class="auth-section student-section">
     <div class="section-content">
-      <div class="section-badge">STUDENTS</div>
-      <h1 class="section-title">For Students</h1>
+      <div class="section-badge">СТУДЕНТЫ</div>
+      <h1 class="section-title">Для студентов</h1>
       <p class="section-description">
-        Discover exciting events, register for activities, and stay connected with campus life. Join thousands of students in making memories.
+        Открывайте для себя увлекательные мероприятия, регистрируйтесь на активности и оставайтесь на связи с жизнью кампуса. Присоединяйтесь к тысячам студентов в создании незабываемых моментов.
       </p>
-      
+
       <button class="primary-btn" (click)="navigateToStudentLogin()">
-        Student Login
+        Вход для студентов
       </button>
-      
+
       <div class="bottom-message">
-        <p>Don't have an account?</p>
-        <a href="javascript:void(0)" class="link-text" (click)="navigateToStudentSignup($event)">Sign up</a>
+        <p>Нет аккаунта?</p>
+        <a href="javascript:void(0)" class="link-text" (click)="navigateToStudentSignup($event)">Зарегистрироваться</a>
       </div>
     </div>
-    
-    <!-- Background Image for Student Section -->
+
+    <!-- Фоновое изображение для секции студентов -->
     <div class="student-bg-image"></div>
   </div>
 </div>

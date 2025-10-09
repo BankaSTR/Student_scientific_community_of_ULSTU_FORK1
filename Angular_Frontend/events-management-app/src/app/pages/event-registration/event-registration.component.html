@@ -1,41 +1,41 @@
 <div class="registration-container" [class.loading]="isLoading">
-  <!-- Loading State -->
+  <!-- Состояние загрузки -->
   <div *ngIf="isLoading" class="loading-overlay">
     <div class="loading-spinner"></div>
     <p>Загрузка информации о мероприятии...</p>
   </div>
 
-  <!-- Main Content -->
+  <!-- Основное содержимое -->
   <div *ngIf="!isLoading && event" class="registration-content">
 
-    <!-- Desktop Two-Column Layout -->
+    <!-- Двухколоночный макет для ПК -->
     <div class="desktop-layout">
 
-      <!-- Left Column - Event Image -->
+      <!-- Левая колонка - Изображение мероприятия -->
       <div class="image-section">
         <div class="event-visual-card">
           <div class="event-image">
-            <!-- Using actual event image from home component -->
+            <!-- Используется изображение мероприятия из главного компонента -->
             <img [src]="getEventImage(event.event_id)"
-                 [alt]="event.event_name + ' event image'"
+                 [alt]="event.event_name + ' изображение мероприятия'"
                  onerror="this.src='/assets/images/default-event.svg'">
           </div>
         </div>
       </div>
 
-      <!-- Right Column - Event Details -->
+      <!-- Правая колонка - Детали мероприятия -->
       <div class="details-section">
         <div class="event-details-card">
 
-          <!-- Event Title -->
+          <!-- Название мероприятия -->
           <h1 class="event-title">{{event.event_name}}</h1>
 
-          <!-- Event Information -->
+          <!-- Информация о мероприятии -->
           <div class="event-info">
 
-            <!-- Date and Time Row - Two side-by-side containers -->
+            <!-- Строка даты и времени - Два контейнера рядом -->
             <div class="date-time-row">
-              <!-- Date Container -->
+              <!-- Контейнер даты -->
               <div class="info-container date-time-container">
                 <div class="info-item">
                   <svg width="24" height="24" viewBox="0 0 24 24" class="info-icon">
@@ -53,7 +53,7 @@
                 </div>
               </div>
 
-              <!-- Time Container -->
+              <!-- Контейнер времени -->
               <div class="info-container date-time-container" *ngIf="event.event_time">
                 <div class="info-item">
                   <svg width="24" height="24" viewBox="0 0 24 24" class="info-icon">
@@ -67,7 +67,7 @@
               </div>
             </div>
 
-            <!-- Description Container -->
+            <!-- Контейнер описания -->
             <div class="info-container description-container" *ngIf="event.event_description">
               <div class="info-item full-width">
                 <svg width="24" height="24" viewBox="0 0 24 24" class="info-icon">
@@ -80,7 +80,7 @@
               </div>
             </div>
 
-            <!-- Organized By Container -->
+            <!-- Контейнер организатора -->
             <div class="info-container organizer-container" *ngIf="event.club">
               <div class="info-item full-width">
                 <svg width="24" height="24" viewBox="0 0 24 24" class="info-icon">
@@ -93,7 +93,7 @@
               </div>
             </div>
 
-            <!-- Venue Container -->
+            <!-- Контейнер места проведения -->
             <div class="info-container venue-container" *ngIf="event.venue">
               <div class="info-item full-width">
                 <svg width="24" height="24" viewBox="0 0 24 24" class="info-icon">
@@ -106,7 +106,7 @@
               </div>
             </div>
 
-            <!-- Judge Container -->
+            <!-- Контейнер судьи -->
             <div class="info-container judge-container" *ngIf="event.judge">
               <div class="info-item full-width">
                 <svg width="24" height="24" viewBox="0 0 24 24" class="info-icon">
@@ -119,7 +119,7 @@
               </div>
             </div>
 
-            <!-- Event Fee Container -->
+            <!-- Контейнер стоимости участия -->
             <div class="info-container fee-container">
               <div class="event-fee-highlight">
                 <div class="fee-content">
@@ -131,7 +131,7 @@
 
           </div>
 
-          <!-- Register Button -->
+          <!-- Кнопка регистрации -->
           <button class="register-btn"
                   (click)="openRegistrationModal()"
                   [disabled]="isRegistering">
@@ -143,12 +143,12 @@
       </div>
     </div>
 
-    <!-- Mobile Single-Column Layout -->
+    <!-- Мобильный одноколоночный макет -->
     <div class="mobile-layout">
-      <!-- Mobile content will stack vertically -->
+      <!-- Мобильный контент будет располагаться вертикально -->
       <div class="mobile-image">
         <img [src]="getEventImage(event.event_id)"
-             [alt]="event.event_name + ' event image'"
+             [alt]="event.event_name + ' изображение мероприятия'"
              onerror="this.src='/assets/images/default-event.svg'">
       </div>
 
@@ -156,7 +156,7 @@
         <h1 class="event-title">{{event.event_name}}</h1>
 
         <div class="event-info">
-          <!-- Mobile containers use the same structure as desktop -->
+          <!-- Мобильные контейнеры используют ту же структуру, что и для ПК -->
           <div class="info-container date-time-container">
             <div class="info-item">
               <svg width="24" height="24" viewBox="0 0 24 24" class="info-icon">
@@ -255,7 +255,7 @@
 
   </div>
 
-  <!-- Registration Modal -->
+  <!-- Модальное окно регистрации -->
   <div class="modal-overlay" *ngIf="isModalOpen" (click)="closeModal()">
     <div class="registration-modal" (click)="$event.stopPropagation()">
 
@@ -267,7 +267,7 @@
 
       <form [formGroup]="registrationForm" (ngSubmit)="onSubmitRegistration()" class="registration-form">
 
-        <!-- Name Field -->
+        <!-- Поле имени -->
         <div class="form-field">
           <label for="name">Имя</label>
           <input type="text"
@@ -278,7 +278,7 @@
           <span class="error-message" *ngIf="getFieldError('name')">{{getFieldError('name')}}</span>
         </div>
 
-        <!-- College Field -->
+        <!-- Поле учебного заведения -->
         <div class="form-field">
           <label for="college">Учебное заведение</label>
           <input type="text"
@@ -289,7 +289,7 @@
           <span class="error-message" *ngIf="getFieldError('college')">{{getFieldError('college')}}</span>
         </div>
 
-        <!-- Contact Field -->
+        <!-- Поле контактного телефона -->
         <div class="form-field">
           <label for="contact">Контактный телефон</label>
           <input type="tel"
@@ -300,7 +300,7 @@
           <span class="error-message" *ngIf="getFieldError('contact')">{{getFieldError('contact')}}</span>
         </div>
 
-        <!-- Email Field -->
+        <!-- Поле электронной почты -->
         <div class="form-field">
           <label for="email">Электронная почта</label>
           <input type="email"
@@ -311,7 +311,7 @@
           <span class="error-message" *ngIf="getFieldError('email')">{{getFieldError('email')}}</span>
         </div>
 
-        <!-- Event Fee Display -->
+        <!-- Отображение стоимости участия -->
         <div class="event-fee-display compact">
           <div class="fee-content-compact">
             <span class="fee-label-small">Регистрационный взнос</span>
@@ -319,15 +319,15 @@
           </div>
         </div>
 
-        <!-- Helper Text -->
+        <!-- Вспомогательный текст -->
         <p class="helper-text">
           После регистрации вы сможете скачать билет на мероприятие. Пожалуйста, распечатайте билет и принесите его с собой на мероприятие, если требуется оплата наличными.
         </p>
 
-        <!-- Error Message -->
+        <!-- Сообщение об ошибке -->
         <div class="error-message" *ngIf="errorMessage">{{errorMessage}}</div>
 
-        <!-- Submit Button -->
+        <!-- Кнопка отправки -->
         <button type="submit"
                 class="submit-btn"
                 [disabled]="isRegistering || registrationForm.invalid">
@@ -339,7 +339,7 @@
     </div>
   </div>
 
-  <!-- Success Modal -->
+  <!-- Модальное окно успеха -->
   <div class="modal-overlay success-overlay" *ngIf="showSuccess" (click)="backToHome()">
     <div class="success-modal" (click)="$event.stopPropagation()">
 
@@ -371,7 +371,7 @@
     </div>
   </div>
 
-  <!-- Event Photo Block -->
+  <!-- Блок фотографии мероприятия -->
   <div class="event-photo-block" *ngIf="event?.eventPhotoUrl">
     <img [src]="event?.eventPhotoUrl" alt="Фото мероприятия" class="event-photo" />
   </div>
