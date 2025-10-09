@@ -11,8 +11,8 @@ interface TeamMember {
   bio: string;
   skills: string[];
   avatar: string;
-  linkedin?: string;
-  github?: string;
+  vk?: string;
+  telegram?: string;
 }
 
 interface Sponsor {
@@ -42,8 +42,8 @@ export class AboutComponent implements OnInit {
       bio: 'Главный специалист отдела организационно-технического обеспечения НОЦ "Точка кипения " ',
       skills: ['Angular', 'Spring Boot', 'TypeScript', 'Java'],
       avatar: 'https://leader-id.storage.yandexcloud.net/user_photo/444539/65399960a15ad567641599_360.jpg',
-      linkedin: 'https://vk.com/dolgov_ks',
-      github: 'https://t.me/dolgov_ks'
+      vk: 'https://vk.com/dolgov_ks',
+      telegram: 'https://t.me/dolgov_ks'
     },
     {
       id: 2,
@@ -52,8 +52,8 @@ export class AboutComponent implements OnInit {
       bio: 'Начальник отдела медиапроектирования Департамента инноваций и технологического предпринимательства',
       skills: ['UI/UX Design', 'Figma'],
       avatar: 'https://leader-id.storage.yandexcloud.net/user_photo/384975/63c683f193bca411543485_360.jpeg',
-      linkedin: 'https://linkedin.com/in/sarahjohnson',
-      github: 'https://github.com/sarahjohnson'
+      vk: '№',
+      telegram: '№'
     },
     {
       id: 3,
@@ -62,8 +62,8 @@ export class AboutComponent implements OnInit {
       bio: 'Директор департамента инноваций и технологического предпринимательства',
       skills: ['Product Management', 'Agile/Scrum', 'Testing', 'Analytics'],
       avatar: 'https://leader-id.storage.yandexcloud.net/upload/255879/bc0b8832-2c91-4bd9-b6a1-04ae1672ff43_360.jpg',
-      linkedin: 'https://linkedin.com/in/michaelrodriguez',
-      github: 'https://github.com/michaelrodriguez'
+      vk: '№',
+      telegram: '№'
     },
     {
       id: 4,
@@ -72,8 +72,8 @@ export class AboutComponent implements OnInit {
       bio: 'Директор, ассистент, кафедра "Информационные системы"',
       skills: ['Product Management', 'Agile/Scrum', 'Testing', 'Analytics'],
       avatar: 'https://leader-id.storage.yandexcloud.net/upload/870326/139ae6fe-f46c-41b0-8b19-2f20ce7e3093_360.jpg',
-      linkedin: 'https://linkedin.com/in/emmawilson',
-      github: 'https://github.com/emmawilson'
+      vk: '№',
+      telegram: '№'
     }
   ];
 
@@ -83,58 +83,37 @@ export class AboutComponent implements OnInit {
       id: 1,
       name: 'TechCorp',
       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg',
-      description: 'Leading technology solutions provider',
+      description: 'Ведущий поставщик технологических решений',
       website: 'https://techcorp.com'
     },
     {
       id: 2,
       name: 'InnovateHub',
       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoft/microsoft-original.svg',
-      description: 'Innovation and startup accelerator',
+      description: 'Акселератор инноваций и стартапов',
       website: 'https://innovatehub.com'
     },
     {
       id: 3,
       name: 'EduTech Solutions',
       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazon/amazon-original.svg',
-      description: 'Educational technology platform',
+      description: 'Платформа образовательных технологий',
       website: 'https://edutech.com'
     },
     {
       id: 4,
-      name: 'CloudVentures',
-      logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apple/apple-original.svg',
-      description: 'Cloud infrastructure services',
-      website: 'https://cloudventures.com'
-    },
-    {
-      id: 5,
-      name: 'DataFlow Inc',
-      logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/facebook/facebook-original.svg',
-      description: 'Big data and analytics solutions',
-      website: 'https://dataflow.com'
-    },
-    {
-      id: 6,
       name: 'NextGen Labs',
       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',
-      description: 'Research and development lab',
+      description: 'Лаборатория исследований и разработок',
       website: 'https://nextgenlabs.com'
     },
     {
-      id: 7,
+      id: 5,
       name: 'CodeCraft Studios',
       logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
-      description: 'Modern web development agency',
+      description: 'Агентство современного веб-разработки',
       website: 'https://codecraft.studio'
     },
-    {
-      id: 8,
-      name: 'Digital Horizon',
-      logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
-      description: 'Full-stack development solutions',
-      website: 'https://digitalhorizon.net'
-    }
   ];
 
   // Event management workflow steps
@@ -203,15 +182,15 @@ export class AboutComponent implements OnInit {
   }
 
   // Open team member social links
-  openLinkedIn(member: TeamMember): void {
-    if (member.linkedin) {
-      window.open(member.linkedin, '_blank');
+  openVK(member: TeamMember): void {
+    if (member.vk) {
+      window.open(member.vk, '_blank');
     }
   }
 
-  openGitHub(member: TeamMember): void {
-    if (member.github) {
-      window.open(member.github, '_blank');
+  openTelegram(member: TeamMember): void {
+    if (member.telegram) {
+      window.open(member.telegram, '_blank');
     }
   }
 }
