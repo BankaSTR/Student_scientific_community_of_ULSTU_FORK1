@@ -18,19 +18,19 @@ export class ResultsComponent implements OnInit, OnDestroy {
   filteredResults: ResultDisplay[] = [];
   statistics: StatisticsResponse | null = null;
   availableEventTypes: string[] = [];
-  
+
   // Subscriptions
   private subscriptions = new Subscription();
-  
+
   // Search and filters
   searchTerm = '';
   selectedEventType = '';
   selectedRankRange = '';
-  
+
   // Pagination
   currentPage = 1;
   itemsPerPage = 10;
-  
+
   isLoading = false;
 
   constructor(
@@ -50,23 +50,23 @@ export class ResultsComponent implements OnInit, OnDestroy {
 
   private loadResults() {
     this.isLoading = true;
-    this.cdr.detectChanges(); // Trigger change detection immediately
-    
+    this.cdr.detectChanges(); // Запуск обнаружения изменений сразу
+
     this.subscriptions.add(
       this.resultService.getFormattedResults().subscribe({
         next: (results) => {
-          console.log('✅ Results page loaded:', results?.length || 0, 'records');
+          console.log('✅ Страница результатов загружена:', results?.length || 0, 'записей');
           this.results = results || [];
           this.applyFilters();
           this.isLoading = false;
-          this.cdr.detectChanges(); // Trigger change detection after data is loaded
+          this.cdr.detectChanges(); // Запуск обнаружения изменений после загрузки данных
         },
         error: (error) => {
-          console.error('❌ Error loading results:', error);
+          console.error('❌ Ошибка загрузки результатов:', error);
           this.results = [];
           this.filteredResults = [];
           this.isLoading = false;
-          this.cdr.detectChanges(); // Trigger change detection on error
+          this.cdr.detectChanges(); // Запуск обнаружения изменений при ошибке
         }
       })
     );
@@ -77,10 +77,10 @@ export class ResultsComponent implements OnInit, OnDestroy {
       this.resultService.getUniqueEventTypes().subscribe({
         next: (eventTypes) => {
           this.availableEventTypes = eventTypes;
-          this.cdr.detectChanges(); // Trigger change detection
+          this.cdr.detectChanges(); // Запуск обнаружения изменений
         },
         error: (error) => {
-          console.error('Error loading event types:', error);
+          console.error('Ошибка загрузки типов событий:', error);
         }
       })
     );
@@ -91,10 +91,10 @@ export class ResultsComponent implements OnInit, OnDestroy {
       this.resultService.getStatistics().subscribe({
         next: (stats) => {
           this.statistics = stats;
-          this.cdr.detectChanges(); // Trigger change detection
+          this.cdr.detectChanges(); // Запуск обнаружения изменений
         },
         error: (error) => {
-          console.error('Error loading statistics:', error);
+          console.error('Ошибка загрузки статистики:', error);
         }
       })
     );
@@ -104,23 +104,23 @@ export class ResultsComponent implements OnInit, OnDestroy {
   applyFilters() {
     this.filteredResults = this.results.filter(result => {
       // Search filter
-      const matchesSearch = !this.searchTerm || 
+      const matchesSearch = !this.searchTerm ||
         result.participantName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         result.participantCollege.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         result.eventName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         result.eventType.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         result.conductedBy.toLowerCase().includes(this.searchTerm.toLowerCase());
-      
+
       // Event type filter
-      const matchesEventType = !this.selectedEventType || 
+      const matchesEventType = !this.selectedEventType ||
         result.eventType === this.selectedEventType;
-      
+
       // Rank range filter
       const matchesRankRange = !this.selectedRankRange || this.isInRankRange(result.rank);
-      
+
       return matchesSearch && matchesEventType && matchesRankRange;
     });
-    
+
     // Reset to first page when filters change
     this.currentPage = 1;
   }
@@ -175,36 +175,36 @@ export class ResultsComponent implements OnInit, OnDestroy {
     const totalPages = this.getTotalPages();
     const current = this.currentPage;
     const pages: (number | string)[] = [];
-    
+
     if (totalPages <= 7) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
       }
     } else {
       pages.push(1);
-      
+
       if (current > 4) {
         pages.push('...');
       }
-      
+
       const start = Math.max(2, current - 1);
       const end = Math.min(totalPages - 1, current + 1);
-      
+
       for (let i = start; i <= end; i++) {
         if (i !== 1 && i !== totalPages) {
           pages.push(i);
         }
       }
-      
+
       if (current < totalPages - 3) {
         pages.push('...');
       }
-      
+
       if (totalPages > 1) {
         pages.push(totalPages);
       }
     }
-    
+
     return pages;
   }
 
@@ -213,13 +213,13 @@ export class ResultsComponent implements OnInit, OnDestroy {
   }
 
   getPaginationInfo(): string {
-    if (this.filteredResults.length === 0) return 'No results';
-    
+    if (this.filteredResults.length === 0) return 'Нет результатов';
+
     const start = (this.currentPage - 1) * this.itemsPerPage + 1;
     const end = Math.min(this.currentPage * this.itemsPerPage, this.filteredResults.length);
     const total = this.filteredResults.length;
-    
-    return `Showing ${start} - ${end} of ${total} results`;
+
+    return `Показаны ${start} - ${end} из ${total} результатов`;
   }
 
   // Statistics methods - now using backend statistics
@@ -286,11 +286,11 @@ export class ResultsComponent implements OnInit, OnDestroy {
     const now = new Date();
     const diffTime = now.getTime() - date.getTime();
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    
-    if (diffDays === 0) return 'Today';
-    if (diffDays === 1) return 'Yesterday';
-    if (diffDays < 7) return `${diffDays} days ago`;
-    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
-    return `${Math.floor(diffDays / 30)} months ago`;
+
+    if (diffDays === 0) return 'Сегодня';
+    if (diffDays === 1) return 'Вчера';
+    if (diffDays < 7) return `${diffDays} дней назад`;
+    if (diffDays < 30) return `${Math.floor(diffDays / 7)} недель назад`;
+    return `${Math.floor(diffDays / 30)} месяцев назад`;
   }
 }

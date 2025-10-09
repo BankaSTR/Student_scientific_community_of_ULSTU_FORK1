@@ -20,17 +20,17 @@ export class SupportComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    // Handle fragment navigation
+    // Обработка навигации по фрагментам
     this.route.fragment.subscribe(fragment => {
       if (fragment) {
-        // Use a longer timeout to ensure DOM is ready
+        // Используйте более длительный таймаут, чтобы убедиться, что DOM готов
         setTimeout(() => this.scrollToElement(fragment), 300);
       }
     });
   }
 
   ngAfterViewInit(): void {
-    // Handle fragment if component is already loaded and DOM is ready
+    // Обработка фрагмента, если компонент уже загружен и DOM готов
     const currentFragment = this.route.snapshot.fragment;
     if (currentFragment) {
       setTimeout(() => this.scrollToElement(currentFragment), 500);
@@ -40,30 +40,30 @@ export class SupportComponent implements OnInit, AfterViewInit {
   private scrollToElement(elementId: string): void {
     const element = document.getElementById(elementId);
     if (element) {
-      element.scrollIntoView({ 
-        behavior: 'smooth', 
+      element.scrollIntoView({
+        behavior: 'smooth',
         block: 'start',
-        inline: 'nearest' 
+        inline: 'nearest'
       });
     }
   }
 
-  // Form data
+  // Данные формы
   supportForm = {
     subject: '',
     message: '',
     userEmail: ''
   };
 
-  // Form state
+  // Состояние формы
   isSubmitting = false;
   submitMessage = '';
 
-  // Contact information
+  // Контактная информация
   contactInfo = {
-    address: 'TCET, A-Block, Gate No 5, Thakur Educational Campus, Thakur Rd, Thakur Village, Kandivali East, Mumbai, Maharashtra 400101',
-    email: 'festflex.support@outlook.com',
-    phone: '+91 000873 3210'
+    address: 'ул. Северный Венец, 32, корп. 7, Ульяновск',
+    email: 'leader@leader.ru',
+    phone: '+7 (8422) 77-82-49'
   };
 
   onSubmitSupportForm() {
@@ -137,9 +137,9 @@ export class SupportComponent implements OnInit, AfterViewInit {
     document.head.appendChild(style);
 
     popup.innerHTML = `
-      <h3 style="margin: 0 0 1rem 0; color: #3A72EC; font-weight: 700;">Login Required</h3>
+      <h3 style="margin: 0 0 1rem 0; color: #3A72EC; font-weight: 700;">Требуется вход в систему</h3>
       <p style="margin: 0 0 1.5rem 0; color: inherit; line-height: 1.5;">
-        You need to log in to submit support requests. Please log in to continue.
+        Вам необходимо войти в систему, чтобы отправить запросы в службу поддержки. Пожалуйста, войдите в систему, чтобы продолжить.
       </p>
       <div style="display: flex; gap: 1rem; justify-content: center;">
         <button id="login-btn" style="
@@ -152,7 +152,7 @@ export class SupportComponent implements OnInit, AfterViewInit {
           cursor: pointer;
           transition: all 0.3s ease;
           box-shadow: 0 4px 15px rgba(58, 114, 236, 0.3);
-        ">Login</button>
+        ">Войти</button>
         <button id="close-btn" style="
           background: rgba(100, 116, 139, 0.1);
           color: #64748b;
@@ -162,7 +162,7 @@ export class SupportComponent implements OnInit, AfterViewInit {
           font-weight: 600;
           cursor: pointer;
           transition: all 0.3s ease;
-        ">Cancel</button>
+        ">Отмена</button>
       </div>
     `;
 
@@ -203,7 +203,7 @@ export class SupportComponent implements OnInit, AfterViewInit {
       message: '',
       userEmail: ''
     };
-    
+
     // Reset form validation state
     if (this.supportFormRef) {
       this.supportFormRef.resetForm();

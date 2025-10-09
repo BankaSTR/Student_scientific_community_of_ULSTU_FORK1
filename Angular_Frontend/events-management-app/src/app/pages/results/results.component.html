@@ -4,8 +4,8 @@
     <!-- Header Section with Center-aligned Titles -->
     <div class="results-header">
       <div class="header-content">
-        <h1 class="page-title text-gradient">Competition Results</h1>
-        <p class="page-subtitle">Track your performance and achievements</p>
+        <h1 class="page-title text-gradient">Результаты соревнований</h1>
+        <p class="page-subtitle">Отслеживайте свои достижения и успехи</p>
       </div>
     </div>
 
@@ -17,14 +17,14 @@
             <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
             <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
-          <input 
-            type="text" 
+          <input
+            type="text"
             class="search-input"
-            placeholder="Search by participant name, event, or date..."
+            placeholder="Поиск по имени участника, событию или дате..."
             [(ngModel)]="searchTerm"
             (input)="applyFilters()">
-          <button 
-            *ngIf="searchTerm" 
+          <button
+            *ngIf="searchTerm"
             class="clear-search"
             (click)="clearSearch()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -37,11 +37,11 @@
 
       <div class="filter-section">
         <div class="filter-dropdown">
-          <select 
+          <select
             class="filter-select"
             [(ngModel)]="selectedEventType"
             (change)="applyFilters()">
-            <option value="">All Events</option>
+            <option value="">Все события</option>
             <option *ngFor="let eventType of availableEventTypes" [value]="eventType">
               {{ eventType }}
             </option>
@@ -52,30 +52,30 @@
         </div>
 
         <div class="filter-dropdown">
-          <select 
+          <select
             class="filter-select"
             [(ngModel)]="selectedRankRange"
             (change)="applyFilters()">
-            <option value="">All Ranks</option>
-            <option value="1-3">Top 3</option>
-            <option value="4-10">Ranks 4-10</option>
-            <option value="11+">Rank 11+</option>
+            <option value="">Все ранги</option>
+            <option value="1-3">Топ 3</option>
+            <option value="4-10">Ранги 4-10</option>
+            <option value="11+">Ранг 11+</option>
           </select>
           <svg class="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </div>
 
-        <button 
+        <button
           *ngIf="hasActiveFilters()"
           class="clear-filters-btn"
           (click)="clearAllFilters()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path d="M3 6H21" stroke="currentColor" stroke-width="2"/>
             <path d="M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" stroke="currentColor" stroke-width="2"/>
-            <path d="M19 6V20C19 21.1046 18.1046 22 17 22H7C6.89543 22 6 21.1046 6 20V6" stroke="currentColor" stroke-width="2"/>
+            <path d="M19 6В20C19 21.1046 18.1046 22 17 22H7C6.89543 22 6 21.1046 6 20V6" stroke="currentColor" stroke-width="2"/>
           </svg>
-          Clear Filters
+          Очистить фильтры
         </button>
       </div>
     </div>
@@ -92,7 +92,7 @@
           </div>
           <div class="stat-content">
             <div class="stat-number">{{ getTopPerformersCount() }}</div>
-            <div class="stat-label">Top 3 Finishers</div>
+            <div class="stat-label">Топ 3 победителей</div>
           </div>
         </div>
 
@@ -107,7 +107,7 @@
           </div>
           <div class="stat-content">
             <div class="stat-number">{{ getUniqueEventsCount() }}</div>
-            <div class="stat-label">Events Completed</div>
+            <div class="stat-label">Завершенные события</div>
           </div>
         </div>
 
@@ -122,7 +122,7 @@
           </div>
           <div class="stat-content">
             <div class="stat-number">{{ getTotalParticipantsCount() }}</div>
-            <div class="stat-label">Total Participants</div>
+            <div class="stat-label">Всего участников</div>
           </div>
         </div>
       </div>
@@ -132,7 +132,7 @@
     <div class="results-table-container">
       <div class="table-header">
         <h3 class="table-title">
-          {{ filteredResults.length > 0 ? 'Competition Results' : 'No Results Found' }}
+          {{ filteredResults.length > 0 ? 'Результаты соревнований' : 'Результаты не найдены' }}
         </h3>
         <div class="table-info">
           {{ getPaginationInfo() }}
@@ -146,47 +146,47 @@
               <tr>
                 <th class="rank-column">
                   <div class="header-content center-aligned">
-                    <span>Rank</span>
+                    <span>Ранг</span>
                   </div>
                 </th>
                 <th class="participant-column">
                   <div class="header-content center-aligned">
-                    <span>Participant</span>
+                    <span>Участник</span>
                   </div>
                 </th>
                 <th class="college-column">
                   <div class="header-content center-aligned">
-                    <span>College</span>
+                    <span>Колледж</span>
                   </div>
                 </th>
                 <th class="event-column">
                   <div class="header-content center-aligned">
-                    <span>Event</span>
+                    <span>Событие</span>
                   </div>
                 </th>
                 <th class="date-column">
                   <div class="header-content center-aligned">
-                    <span>Date</span>
+                    <span>Дата</span>
                   </div>
                 </th>
                 <th class="score-column">
                   <div class="header-content center-aligned">
-                    <span>Score</span>
+                    <span>Очки</span>
                   </div>
                 </th>
                 <th class="status-column">
                   <div class="header-content center-aligned">
-                    <span>Conducted By</span>
+                    <span>Проведено</span>
                   </div>
                 </th>
               </tr>
             </thead>
             <tbody>
-              <tr 
+              <tr
                 *ngFor="let result of getPaginatedResults(); let i = index"
                 class="table-row"
                 [class.winner-row]="result.rank <= 3">
-                
+
                 <!-- Rank Column -->
                 <td class="rank-cell">
                   <div class="rank-container">
@@ -239,8 +239,8 @@
                   <div class="score-container">
                     <div class="score-value">{{ result.score || 'N/A' }}</div>
                     <div class="score-progress" *ngIf="result.score">
-                      <div 
-                        class="score-bar" 
+                      <div
+                        class="score-bar"
                         [style.width]="getScorePercentage(result.score) + '%'"
                         [style.background-color]="getScoreColor(result.score)">
                       </div>
@@ -268,13 +268,13 @@
             <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
             <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2"/>
           </svg>
-          <h3>No Results Found</h3>
-          <p>Try adjusting your search criteria or filters</p>
+          <h3>Результаты не найдены</h3>
+          <p>Попробуйте изменить критерии поиска или фильтры</p>
           <button class="reset-btn" (click)="clearAllFilters()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path d="M3 12L9 18L21 6" stroke="currentColor" stroke-width="2"/>
             </svg>
-            Show All Results
+            Показать все результаты
           </button>
         </div>
       </div>
@@ -284,20 +284,20 @@
         <div class="pagination-info">
           <span>{{ getPaginationInfo() }}</span>
         </div>
-        
+
         <div class="pagination-buttons">
-          <button 
+          <button
             class="pagination-btn"
             [disabled]="currentPage === 1"
             (click)="changePage(currentPage - 1)">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2"/>
             </svg>
-            Previous
+            Назад
           </button>
-          
+
           <div class="page-numbers">
-            <button 
+            <button
               *ngFor="let page of getPageNumbers()"
               class="page-number"
               [class.active]="page === currentPage"
@@ -306,22 +306,22 @@
               {{ page }}
             </button>
           </div>
-          
-          <button 
+
+          <button
             class="pagination-btn"
             [disabled]="currentPage === getTotalPages()"
             (click)="changePage(currentPage + 1)">
-            Next
+            Вперёд
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2"/>
             </svg>
           </button>
         </div>
-        
+
         <div class="items-per-page">
-          <label>Show:</label>
-          <select 
-            [(ngModel)]="itemsPerPage" 
+          <label>Показать:</label>
+          <select
+            [(ngModel)]="itemsPerPage"
             (change)="onItemsPerPageChange()"
             class="items-select">
             <option value="10">10</option>
@@ -336,7 +336,7 @@
     <div class="loading-overlay" *ngIf="isLoading">
       <div class="loading-content">
         <div class="loading-spinner"></div>
-        <p>Loading results...</p>
+        <p>Загрузка результатов...</p>
       </div>
     </div>
   </div>
