@@ -1081,8 +1081,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Get month abbreviation for the date badge
   getDateMonth(dateStr: string): string {
     const date = new Date(dateStr);
-    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
-                   'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    const months = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮН',
+                   'ИЮЛ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯ', 'ДЕК'];
     return months[date.getMonth()];
   }
 

@@ -386,6 +386,20 @@ export class AdminEventsComponent implements OnInit {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
   }
 
+  formatEventDateTime(dateString: string, timeString: string): string {
+    const date = new Date(`${dateString}T${timeString}`);
+    return isNaN(date.getTime())
+      ? ''
+      : date.toLocaleString('ru-RU', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        });
+  }
+
   onSearchChange(): void {
     const term = this.searchTerm.toLowerCase().trim();
 
