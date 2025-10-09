@@ -52,6 +52,9 @@ public class Events {
 	@Column
 	private Integer venue_id;
 	
+	@Column
+	private String eventPhotoUrl;
+
 	// Relationships
 	@ManyToOne
 	@JoinColumn(name = "venue_id", insertable = false, updatable = false)
@@ -134,7 +137,13 @@ public class Events {
 	public void setVenue_id(Integer venue_id) {
 		this.venue_id = venue_id;
 	}
-	
+	public String getEventPhotoUrl() {
+		return eventPhotoUrl;
+	}
+	public void setEventPhotoUrl(String eventPhotoUrl) {
+		this.eventPhotoUrl = eventPhotoUrl;
+	}
+
 	// Relationship getters and setters
 	public Venue getVenue() {
 		return venue;

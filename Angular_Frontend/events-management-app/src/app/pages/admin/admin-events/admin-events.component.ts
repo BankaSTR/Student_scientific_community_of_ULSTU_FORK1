@@ -18,6 +18,8 @@ interface Event {
   venue?: { venue_id: number; name: string; floor: number };
   club?: { club_id: number; name: string };
   judge?: { judge_id: number; judge_name: string };
+  // Новое поле для фото мероприятия
+  event_photo_url?: string;
 }
 
 interface Venue {
@@ -50,7 +52,7 @@ export class AdminEventsComponent implements OnInit {
   judges: Judge[] = [];
   filteredEvents: Event[] = [];
   searchTerm: string = '';
-  
+
   showCreateModal = false;
   showDeleteModal = false;
   showSuccessToast = false;
@@ -59,10 +61,11 @@ export class AdminEventsComponent implements OnInit {
   eventForm: FormGroup;
   loading = false; // Start with false - no lazy loading
   error = '';
-  
+
   selectedEventId: number | null = null;
   minDate: string = '';
-  
+  selectedPhotoFile: File | null = null;
+
   private apiUrl = 'http://localhost:8080/api';  constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -87,7 +90,7 @@ export class AdminEventsComponent implements OnInit {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     this.minDate = tomorrow.toISOString().split('T')[0];
-    
+
     this.loadAllData();
   }
 
@@ -100,7 +103,7 @@ export class AdminEventsComponent implements OnInit {
         this.loadClubs(),
         this.loadJudges()
       ]);
-      
+
       // Force change detection to update UI immediately
       this.cdr.detectChanges();
     } catch (error) {
@@ -188,53 +191,57 @@ export class AdminEventsComponent implements OnInit {
   validateDates(): boolean {
     const startDate = this.eventForm.get('event_start_date')?.value;
     const endDate = this.eventForm.get('event_end_date')?.value;
-    
+
     if (!startDate || !endDate) {
       return false;
     }
-    
+
     // Check if start date is tomorrow or later
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     tomorrow.setHours(0, 0, 0, 0);
-    
+
     const start = new Date(startDate);
     start.setHours(0, 0, 0, 0);
-    
+
     if (start < tomorrow) {
       this.error = 'Start date must be tomorrow or later';
       return false;
     }
-    
+
     // Check if end date is >= start date
     const end = new Date(endDate);
     end.setHours(0, 0, 0, 0);
-    
+
     if (end < start) {
       this.error = 'End date must be on or after start date';
       return false;
     }
-    
+
     return true;
+  }
+
+  onFileSelected(event: any): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedPhotoFile = input.files[0];
+    } else {
+      this.selectedPhotoFile = null;
+    }
   }
 
   async submitEvent() {
     if (this.eventForm.invalid) {
-      this.error = 'Please fill in all required fields correctly';
+      this.error = 'Пожалуйста, заполните все обязательные поля корректно';
       return;
     }
-    
     if (!this.validateDates()) {
       return;
     }
-    
     this.loading = true;
     this.error = '';
-    
     try {
       const formValue = this.eventForm.value;
-      
-      // Create event object with proper null handling
       const eventData: any = {
         event_name: formValue.event_name,
         event_start_date: formValue.event_start_date,
@@ -243,25 +250,25 @@ export class AdminEventsComponent implements OnInit {
         event_type: formValue.event_type,
         event_description: formValue.event_description
       };
-      
-      // Only include IDs if they have values
       if (formValue.judge_id) eventData.judge_id = parseInt(formValue.judge_id);
       if (formValue.club_id) eventData.club_id = parseInt(formValue.club_id);
       if (formValue.venue_id) eventData.venue_id = parseInt(formValue.venue_id);
-      
+      // Если выбрано фото, отправляем его на сервер
+      let photoUrl = '';
+      if (this.selectedPhotoFile) {
+        const formData = new FormData();
+        formData.append('file', this.selectedPhotoFile);
+        const uploadResponse: any = await this.http.post(`${this.apiUrl}/events/upload-photo`, formData).toPromise();
+        photoUrl = uploadResponse?.url || '';
+        eventData.eventPhotoUrl = photoUrl; // исправлено имя поля
+      }
       await this.http.post<Event>(`${this.apiUrl}/events`, eventData).toPromise();
-      
-      // Close modal
       this.closeCreateModal();
-      
-      // Show success toast
-      this.showSuccessMessage('Event created successfully!');
-      
-      // Reload events
+      this.showSuccessMessage('Мероприятие успешно создано!');
       await this.loadEvents();
     } catch (error: any) {
-      console.error('Error creating event:', error);
-      this.error = error?.error?.message || 'Failed to create event. Please try again.';
+      console.error('Ошибка при создании мероприятия:', error);
+      this.error = error?.error?.message || 'Не удалось создать мероприятие. Попробуйте ещё раз.';
     } finally {
       this.loading = false;
     }
@@ -279,35 +286,35 @@ export class AdminEventsComponent implements OnInit {
 
   async confirmDelete() {
     if (!this.selectedEventId) return;
-    
+
     this.loading = true;
     this.error = '';
     this.cdr.detectChanges(); // Force update to show "Deleting..."
-    
+
     try {
       // Delete event via API - DON'T CHANGE THIS LOGIC
       console.log('Deleting event with ID:', this.selectedEventId);
       console.log('DELETE URL:', `${this.apiUrl}/events/${this.selectedEventId}`);
-      
+
       await this.http.delete(`${this.apiUrl}/events/${this.selectedEventId}`, { responseType: 'text' }).toPromise();
-      
+
       console.log('Delete successful!');
-      
+
       // Reload events immediately
       await this.loadEvents();
-      
+
       // Wait 3 seconds while showing "Deleting..." message
       await new Promise(resolve => setTimeout(resolve, 3000));
-      
+
       // Now close the modal
       this.loading = false;
       this.showDeleteModal = false;
       this.selectedEventId = null;
       this.cdr.detectChanges(); // Force modal to close
-      
+
       // Wait for modal animation to complete
       await new Promise(resolve => setTimeout(resolve, 300));
-      
+
       // Show success toast for 3 seconds
       console.log('About to show toast...');
       this.toastMessage = 'Event deleted successfully!';
@@ -315,26 +322,26 @@ export class AdminEventsComponent implements OnInit {
       console.log('Toast state:', this.showSuccessToast, 'Message:', this.toastMessage);
       this.cdr.detectChanges(); // Force toast to show
       console.log('Change detection triggered for toast');
-      
+
       // Hide toast after 3 seconds
       setTimeout(() => {
         console.log('Hiding toast...');
         this.showSuccessToast = false;
         this.cdr.detectChanges(); // Force toast to hide
       }, 3000);
-      
+
     } catch (error: any) {
       console.error('Error deleting event:', error);
       console.error('Error status:', error.status);
       console.error('Error message:', error.message);
       console.error('Error URL:', error.url);
-      
+
       // Reset loading state
       this.loading = false;
       this.showDeleteModal = false;
       this.selectedEventId = null;
       this.cdr.detectChanges();
-      
+
       this.showErrorMessage(`Failed to delete event. Server might not be running or event doesn't exist.`);
     }
   }
@@ -381,13 +388,13 @@ export class AdminEventsComponent implements OnInit {
 
   onSearchChange(): void {
     const term = this.searchTerm.toLowerCase().trim();
-    
+
     if (!term) {
       this.filteredEvents = [...this.events];
       return;
     }
 
-    this.filteredEvents = this.events.filter(event => 
+    this.filteredEvents = this.events.filter(event =>
       event.event_name.toLowerCase().includes(term) ||
       event.event_type.toLowerCase().includes(term) ||
       event.event_description.toLowerCase().includes(term) ||

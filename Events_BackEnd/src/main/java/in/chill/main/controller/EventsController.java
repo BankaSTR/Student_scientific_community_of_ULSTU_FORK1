@@ -14,12 +14,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.util.StringUtils;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 
 import in.chill.main.entity.Events;
 import in.chill.main.services.ClubService;
 import in.chill.main.services.EventsService;
 import in.chill.main.services.JudgeService;
 import in.chill.main.services.VenueService;
+import in.chill.main.service.CloudinaryUploadService;
 
 @RestController
 @RequestMapping("/api")
@@ -38,6 +51,9 @@ public class EventsController {
 	@Autowired
 	private JudgeService judgeService;
 	
+	@Autowired
+	private CloudinaryUploadService cloudinaryUploadService;
+
 	@GetMapping("/")
 	public String home() {
 		return "Events Management System API is running! Available endpoints: /api/events, /api/clubs, /api/venues, /api/judges, /api/volunteers, /api/sponsors, /api/budgets, /api/departments, /api/registrations, /api/participations, /api/results, /api/feedbacks";
@@ -160,6 +176,21 @@ public class EventsController {
 			return ResponseEntity.ok().body("Event deleted successfully");
 		} catch (Exception e) {
 			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@PostMapping(value = "/events/upload-photo", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ResponseEntity<?> uploadEventPhoto(@RequestParam("file") MultipartFile file) {
+		if (file.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Файл не выбран");
+		}
+		try {
+			String url = cloudinaryUploadService.uploadFile(file);
+			Map<String, String> response = new HashMap<>();
+			response.put("url", url);
+			return ResponseEntity.ok(response);
+		} catch (IOException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ошибка загрузки файла: " + e.getMessage());
 		}
 	}
 }

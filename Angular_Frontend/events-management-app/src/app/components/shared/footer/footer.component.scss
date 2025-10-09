@@ -5,7 +5,7 @@
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.1);
   margin-top: 4rem;
-  
+
   :host-context(.dark) & {
     background: rgba(15, 23, 42, 0.9);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -24,20 +24,20 @@
   grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
   gap: 2rem;
   padding: 3rem 0 2rem;
-  
+
   @media (max-width: 1024px) {
     grid-template-columns: 2fr 1fr 1fr 1fr;
-    
+
     .footer-section:last-child {
       grid-column: span 2;
     }
   }
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
   }
-  
+
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -51,73 +51,78 @@
       align-items: center;
       justify-content: flex-start;
       margin-bottom: 0.5rem;
-      
+
       .logo-image {
         height: 60px; // Increased from 40px for better visibility
         width: auto;
         max-width: 200px; // Increased from 150px
         object-fit: contain;
         filter: brightness(1.1);
-        
+
         :host-context(.dark) & {
           filter: brightness(1.2);
         }
       }
     }
-    
+
     .brand-description {
       font-size: 0.95rem;
       line-height: 1.6;
       color: #64748b;
       margin-bottom: 1.5rem;
       max-width: 280px;
-      
+
       :host-context(.dark) & {
         color: #94a3b8;
       }
     }
-    
+
     .social-links {
       display: flex;
       gap: 0.75rem;
-      
+      border-radius: 50%;
+
       .social-link {
         width: 40px;
         height: 40px;
-        padding-top: 5px;
-        background: rgba(58, 114, 236, 0.1);
-        border: 1px solid rgba(58, 114, 236, 0.2);
-        border-radius: 10px;
+        border: none;
+        box-shadow: none;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #3A72EC;
         text-decoration: none;
         transition: all 0.3s ease;
-        
+        border-radius: 15%;
+
         :host-context(.dark) & {
           background: rgba(74, 130, 252, 0.15);
           border: 1px solid rgba(74, 130, 252, 0.3);
           color: #4a82fc;
         }
-        
+
         &:hover {
           background: #3A72EC;
           color: white;
           transform: translateY(-2px);
           box-shadow: 0 8px 25px rgba(58, 114, 236, 0.3);
-          
+
           :host-context(.dark) & {
             background: #4a82fc;
             box-shadow: 0 8px 25px rgba(74, 130, 252, 0.4);
           }
         }
-        
+
         .social-icon {
-          font-size: 1.1rem;
-          
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 35px;
+          height: 35px;
+          background-size: 100%; /* Уменьшаю размер изображения внутри иконки */
+
           // Real social media icons using SVGs
-          &.icon-twitter::before { 
+          &.icon-twitter::before {
             content: "";
             display: inline-block;
             width: 18px;
@@ -126,7 +131,7 @@
             background-size: contain;
             background-repeat: no-repeat;
           }
-          &.icon-linkedin::before { 
+          &.icon-linkedin::before {
             content: "";
             display: inline-block;
             width: 18px;
@@ -135,7 +140,7 @@
             background-size: contain;
             background-repeat: no-repeat;
           }
-          &.icon-github::before { 
+          &.icon-github::before {
             content: "";
             display: inline-block;
             width: 18px;
@@ -144,7 +149,7 @@
             background-size: contain;
             background-repeat: no-repeat;
           }
-          &.icon-discord::before { 
+          &.icon-discord::before {
             content: "";
             display: inline-block;
             width: 18px;
@@ -153,51 +158,57 @@
             background-size: contain;
             background-repeat: no-repeat;
           }
+          &.icon-telegram {
+            background-image: url('/assets/icons/telegram-icon.svg');
+          }
+          &.icon-vk {
+            background-image: url('/assets/icons/vk-icon.svg');
+          }
         }
       }
     }
   }
-  
+
   .section-title {
     font-size: 1rem;
     font-weight: 700;
     color: #334155;
     margin-bottom: 1rem;
     margin-top: 15px;
-    
+
     :host-context(.dark) & {
       color: #e2e8f0;
     }
   }
-  
+
   .footer-links {
     list-style: none;
     padding: 0;
     margin: 0;
-    
+
     li {
       margin-bottom: 0.5rem;
-      
+
       &:last-child {
         margin-bottom: 0;
       }
     }
-    
+
     .footer-link {
       font-size: 0.9rem;
       color: #64748b;
       text-decoration: none;
       transition: all 0.3s ease;
       display: inline-block;
-      
+
       :host-context(.dark) & {
         color: #94a3b8;
       }
-      
+
       &:hover {
         color: #3A72EC;
         transform: translateX(4px);
-        
+
         :host-context(.dark) & {
           color: #4a82fc;
         }
@@ -209,49 +220,49 @@
 .footer-bottom {
   border-top: 1px solid rgba(58, 114, 236, 0.1);
   padding: 1.5rem 0;
-  
+
   :host-context(.dark) & {
     border-top: 1px solid rgba(74, 130, 252, 0.2);
   }
-  
+
   .footer-bottom-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
+
     @media (max-width: 768px) {
       flex-direction: column;
       gap: 1rem;
       text-align: center;
     }
-    
+
     .copyright {
       font-size: 0.85rem;
       color: #64748b;
       margin: 0;
-      
+
       :host-context(.dark) & {
         color: #94a3b8;
       }
     }
-    
+
     .footer-bottom-links {
       display: flex;
       gap: 1.5rem;
-      
+
       .bottom-link {
         font-size: 0.85rem;
         color: #64748b;
         text-decoration: none;
         transition: color 0.3s ease;
-        
+
         :host-context(.dark) & {
           color: #94a3b8;
         }
-        
+
         &:hover {
           color: #3A72EC;
-          
+
           :host-context(.dark) & {
             color: #4a82fc;
           }
