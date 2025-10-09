@@ -1,16 +1,13 @@
-<!-- Gallery Container -->
+<!-- Галерея СНС УлГТУ -->
 <div class="gallery-container">
-
-  <!-- Section 1: Enhanced Introductory Message with Full Height Container -->
+  <!-- Введение -->
   <section class="intro-section">
     <div class="intro-content">
       <div class="intro-text">
-        <h1 class="gallery-title">Event Gallery</h1>
+        <h1 class="gallery-title">Галерея СНС УлГТУ</h1>
         <p class="gallery-subtitle">
-          Explore the vibrant memories of our past events, where ideas came alive and creativity thrived. Let these moments inspire you to be part of our growing community of learners, creators, and innovators.
+          Добро пожаловать в галерею Студенческого научного сообщества УлГТУ! Здесь собраны лучшие моменты с наших мероприятий, научных конференций, хакатонов и встреч. СНС УлГТУ — это площадка для развития, обмена опытом и вдохновения для каждого студента.
         </p>
-        
-        <!-- Enhanced Visual Elements -->
         <div class="gallery-features">
           <div class="feature-item">
             <div class="feature-icon">
@@ -21,11 +18,10 @@
               </svg>
             </div>
             <div class="feature-text">
-              <h3>Captured Moments</h3>
-              <p>Relive the excitement of our events</p>
+              <h3>Наука и инновации</h3>
+              <p>Фото с конференций, форумов и проектных сессий СНС УлГТУ</p>
             </div>
           </div>
-
           <div class="feature-item">
             <div class="feature-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -36,11 +32,10 @@
               </svg>
             </div>
             <div class="feature-text">
-              <h3>Community Spirit</h3>
-              <p>Connect with fellow innovators</p>
+              <h3>Команда и развитие</h3>
+              <p>Вдохновляйтесь работой наших команд, наставников и организаторов</p>
             </div>
           </div>
-
           <div class="feature-item">
             <div class="feature-icon">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -51,16 +46,14 @@
               </svg>
             </div>
             <div class="feature-text">
-              <h3>Innovation Hub</h3>
-              <p>Showcase of creativity and talent</p>
+              <h3>Будущее начинается здесь</h3>
+              <p>Стань частью сообщества, которое меняет науку и университетскую жизнь</p>
             </div>
           </div>
         </div>
-
-        <!-- Call to Action -->
         <div class="intro-cta">
           <button class="explore-btn" (click)="scrollToGallery()">
-            <span class="explore-text">Explore Gallery</span>
+            <span class="explore-text">Смотреть галерею</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -68,12 +61,12 @@
         </div>
       </div>
 
-      <!-- Enhanced Image with Better Height and Zoom -->
+      <!-- Первое изображение-->
       <div class="intro-image">
         <div class="image-container">
-          <img 
-            src="assets/images/gallery-intro.jpg" 
-            alt="Gallery Introduction" 
+          <img
+            src="assets/images/gallery-intro.jpg"
+            alt="Gallery Introduction"
             class="intro-img"
           />
           <div class="image-overlay">
@@ -88,57 +81,31 @@
     </div>
   </section>
 
-  <!-- Section 2: Image Gallery with Enhanced Layout -->
+  <!-- Галерея изображений -->
   <section class="gallery-section" id="gallery-grid">
     <div class="gallery-content">
-      
-      <!-- Loading State -->
       <div *ngIf="isLoading" class="loading-container">
         <div class="loading-spinner"></div>
-        <p class="loading-text">Loading Gallery...</p>
+        <p class="loading-text">Загрузка галереи...</p>
       </div>
-
-      <!-- Gallery Grid with Instant Loading -->
-      <div 
-        *ngIf="!isLoading" 
-        class="gallery-grid"
-      >
-        <div 
-          *ngFor="let image of currentPageImages; let i = index; trackBy: trackByImageId"
-          class="gallery-item"
-          [class]="'item-' + (i + 1)"
-          (click)="openImageModal(image)"
-          [attr.data-event]="image.eventName"
-        >
+      <div *ngIf="!isLoading" class="gallery-grid">
+        <div *ngFor="let image of currentPageImages; let i = index; trackBy: trackByImageId" class="gallery-item" [class]="'item-' + (i + 1)" (click)="openImageModal(image)" [attr.data-event]="image.eventName">
           <div class="image-container">
-            <img 
-              [src]="image.src" 
-              [alt]="image.alt"
-              class="gallery-image"
-              loading="lazy"
-            />
+            <img [src]="image.src" [alt]="image.alt" class="gallery-image" loading="lazy" />
             <div class="image-overlay">
               <div class="overlay-content">
                 <h3 class="event-name">{{ image.eventName }}</h3>
-                <p class="view-hint">Click to view</p>
+                <p class="view-hint">Нажмите для просмотра</p>
               </div>
             </div>
             <div class="hover-glow"></div>
           </div>
         </div>
       </div>
-
-      <!-- Enhanced Pagination Controls -->
       <div class="pagination-container" *ngIf="!isLoading">
-        
         <div class="pagination-controls">
           <div class="page-numbers">
-            <button
-              *ngFor="let page of pageNumbers"
-              class="page-number-btn"
-              [class.active]="page === currentPage"
-              (click)="goToPage(page)"
-            >
+            <button *ngFor="let page of pageNumbers" class="page-number-btn" [class.active]="page === currentPage" (click)="goToPage(page)">
               {{ page }}
             </button>
           </div>
@@ -147,18 +114,17 @@
     </div>
   </section>
 
-  <!-- Section 3: Inspirational Quote (Reduced Spacing) -->
+  <!-- Вдохновляющая цитата -->
   <section class="inspiration-section">
     <div class="inspiration-content">
       <div class="quote-container">
         <div class="quote-mark">"</div>
         <blockquote class="inspirational-quote">
-          Every event is a new opportunity to learn, connect, and create memories that last a lifetime. 
-          Join us in building a community where innovation meets celebration.
+          Каждый проект — это шаг к новым знаниям и открытиям. Вместе мы создаём будущее науки в УлГТУ!
         </blockquote>
         <div class="quote-author">
-          <span class="author-name">FestFlex Community</span>
-          <span class="author-title">Building Tomorrow's Leaders</span>
+          <span class="author-name">СНС УлГТУ</span>
+          <span class="author-title">Объединяя студентов и науку</span>
         </div>
       </div>
       <div class="inspiration-background">
@@ -169,30 +135,19 @@
     </div>
   </section>
 
-  <!-- Section 4: Footer (No spacing gap) -->
   <app-footer></app-footer>
 </div>
 
-<!-- Image Modal -->
-<div 
-  class="modal-overlay" 
-  *ngIf="showModal"
-  (click)="closeImageModal()"
->
+<!-- Модальное окно для изображений -->
+<div class="modal-overlay" *ngIf="showModal" (click)="closeImageModal()">
   <div class="modal-container" (click)="$event.stopPropagation()">
     <button class="modal-close" (click)="closeImageModal()">
       <span class="close-icon">✕</span>
     </button>
-    
     <div class="modal-content" *ngIf="selectedImage">
       <div class="modal-image-container">
-        <img 
-          [src]="selectedImage.src" 
-          [alt]="selectedImage.alt"
-          class="modal-image"
-        />
+        <img [src]="selectedImage.src" [alt]="selectedImage.alt" class="modal-image" />
       </div>
-      
       <div class="modal-info">
         <div class="modal-content-wrapper">
           <h2 class="modal-event-name">{{ selectedImage.eventName }}</h2>
