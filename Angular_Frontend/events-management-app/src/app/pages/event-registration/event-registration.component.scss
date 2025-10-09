@@ -7,7 +7,7 @@
   background: #ffffff; /* Light mode background as default */
   position: relative;
   overflow-x: hidden;
-  
+
   /* Dark mode background */
   :host-context(.dark) & {
     background: linear-gradient(135deg, #0a0b1e 0%, #1a1b3a 100%);
@@ -22,30 +22,30 @@
   justify-content: center;
   min-height: 50vh;
   color: #1f2937; /* Light mode text */
-  
+
   :host-context(.dark) & {
     color: white; /* Dark mode text */
   }
-  
+
   .desktop-layout {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .image-section .event-visual-card .event-image {
     aspect-ratio: 16/9; /* Better mobile ratio */
   }
-  
+
   .details-section .event-info .date-time-row {
     grid-template-columns: 1fr;
   }
-  
+
   .registration-modal {
     padding: 1.5rem 1rem;
     margin: 0.5rem;
     max-height: 95vh; /* Better mobile modal height */
   }
-  
+
   .modal-overlay {
     padding: 0.5rem; /* Better mobile modal spacing */
   }
@@ -59,12 +59,12 @@
   justify-content: center;
   min-height: 50vh;
   color: #374151; /* Light mode text as default */
-  
+
   /* Dark mode loading */
   :host-context(.dark) & {
     color: white;
   }
-  
+
   .loading-spinner {
     width: 40px;
     height: 40px;
@@ -73,7 +73,7 @@
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-bottom: 1rem;
-    
+
     /* Dark mode spinner */
     :host-context(.dark) & {
       border: 3px solid rgba(255, 255, 255, 0.3);
@@ -100,7 +100,7 @@
   grid-template-columns: 420px 1fr; /* Fixed width for image, flexible for details */
   gap: 2rem;
   align-items: start;
-  
+
   @media (max-width: 968px) {
     display: none;
   }
@@ -109,7 +109,7 @@
 /* Mobile Single-Column Layout */
 .mobile-layout {
   display: none;
-  
+
   @media (max-width: 968px) {
     display: block;
   }
@@ -124,22 +124,22 @@
     border-radius: 24px;
     padding: 1.5rem;
     border: 1px solid rgba(0, 0, 0, 0.1); /* Light mode border */
-    box-shadow: 
+    box-shadow:
       0 8px 32px rgba(0, 0, 0, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.8);
     transition: all 0.3s ease;
     height: 47.6rem;
     width: 36rem;
-    
+
     /* Dark mode styling */
     :host-context(.dark) & {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 
+      box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
-    
+
     .event-image {
       border-radius: 16px;
       overflow: hidden;
@@ -148,14 +148,14 @@
       align-items: center;
       justify-content: center;
       position: relative;
-      
+
       img {
         width: 33rem;
         height: 44.6rem;
         object-fit: cover;
         object-position: center;
         transition: transform 0.3s ease;
-        
+
         &:hover {
           transform: scale(1.02);
         }
@@ -171,7 +171,7 @@
     flex-direction: column;
     gap: 30px;
     padding-left: 167px;
-    
+
     .event-title {
       background: linear-gradient(135deg, #3A72EC 0%, #1d4ed8 100%); /* Light mode gradient as default */
       -webkit-background-clip: text;
@@ -182,7 +182,7 @@
       margin: 0;
       line-height: 1.1;
       text-align: left;
-      
+
       /* Dark mode title */
       :host-context(.dark) & {
         background: #3A72EC;
@@ -191,23 +191,23 @@
         background-clip: text;
       }
     }
-    
+
     .event-info {
       display: flex;
       flex-direction: column;
       gap: 1.45rem;
-      
+
       /* Date and Time Row - Two side-by-side containers */
       .date-time-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1rem;
-        
+
         @media (max-width: 600px) {
           grid-template-columns: 1fr;
         }
       }
-      
+
       .info-container {
         background: rgba(255, 255, 255, 0.8); /* Light mode as default */
         backdrop-filter: blur(20px);
@@ -215,69 +215,69 @@
         border-radius: 16px;
         padding: 16px 15px;
         border: 1px solid rgba(0, 0, 0, 0.1); /* Light mode border */
-        box-shadow: 
+        box-shadow:
           0 8px 32px rgba(0, 0, 0, 0.08),
           inset 0 1px 0 rgba(255, 255, 255, 0.9);
         transition: all 0.3s ease;
-        
+
         /* Dark mode styling */
         :host-context(.dark) & {
           background: rgba(255, 255, 255, 0.05);
           border: 1px solid rgba(255, 255, 255, 0.1);
-          box-shadow: 
+          box-shadow:
             0 8px 32px rgba(0, 0, 0, 0.3),
             inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
-        
+
         /* Container Variants with Consistent Theme */
         &.date-time-container .info-item {
           .info-icon {
             color: #0ea5e9; /* Light mode icon color as default */
-            
+
             /* Dark mode icon color */
             :host-context(.dark) & {
               color: #00d2ff;
             }
           }
         }
-        
+
         &.description-container .info-item {
           .info-icon {
             color: #0ea5e9; /* Light mode icon color as default */
-            
+
             /* Dark mode icon color */
             :host-context(.dark) & {
               color: #00d2ff;
             }
           }
         }
-        
+
         &.organizer-container .info-item {
           .info-icon {
             color: #0ea5e9; /* Light mode icon color as default */
-            
+
             /* Dark mode icon color */
             :host-context(.dark) & {
               color: #00d2ff;
             }
           }
         }
-        
+
         &.venue-container .info-item {
           .info-icon {
             color: #0ea5e9; /* Light mode icon color as default */
-            
+
             /* Dark mode icon color */
             :host-context(.dark) & {
               color: #00d2ff;
             }
           }
         }
-        
+
         &.judge-container .info-item {
           .info-icon {
             color: #0ea5e9; /* Light mode icon color as default */
-            
+
             /* Dark mode icon color */
             :host-context(.dark) & {
               color: #00d2ff;
@@ -291,31 +291,31 @@
           justify-content: center;
           text-align: center;
           padding: 10px;
-          
+
           .event-fee-highlight {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
-            
+
             .fee-icon {
               color: #0ea5e9; /* Light mode fee icon color as default */
               fill: currentColor;
               flex-shrink: 0;
               width: 24px;
               height: 24px;
-              
+
               /* Dark mode fee icon color */
               :host-context(.dark) & {
                 color: #00d2ff;
               }
             }
-            
+
             .fee-content {
               display: flex;
               flex-direction: column;
               align-items: center;
-              
+
               .fee-label {
                 font-size: 0.9rem;
                 opacity: 0.8;
@@ -324,13 +324,13 @@
                 color: rgba(75, 85, 99, 0.8); /* Light mode fee label as default */
                 margin-bottom: 0.25rem;
                 font-weight: 500;
-                
+
                 /* Dark mode fee label color */
                 :host-context(.dark) & {
                   color: rgba(255, 255, 255, 0.7);
                 }
               }
-              
+
               .fee-amount {
                 font-size: 2rem;
                 font-weight: 700;
@@ -338,7 +338,7 @@
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 background-clip: text;
-                
+
                 /* Dark mode fee amount */
                 :host-context(.dark) & {
                   background: linear-gradient(135deg, #3a72ec, #8b5cf6);
@@ -351,16 +351,16 @@
           }
         }
       }
-      
+
       .info-item {
         display: flex;
         align-items: flex-start;
         gap: 0.75rem;
-        
+
         &.full-width {
           width: 100%;
         }
-        
+
         .info-icon {
           color: #0ea5e9; /* Light mode icon color as default */
           fill: currentColor;
@@ -368,22 +368,22 @@
           flex-shrink: 0;
           width: 24px;
           height: 24px;
-          
+
           /* Dark mode icon color */
           :host-context(.dark) & {
             color: #00d2ff;
           }
         }
-        
+
         .info-content {
           flex: 1;
           color: #1f2937; /* Light mode text as default */
-          
+
           /* Dark mode text colors */
           :host-context(.dark) & {
             color: white;
           }
-          
+
           .info-label {
             display: inline;
             font-size: 1rem;
@@ -393,25 +393,25 @@
             letter-spacing: 0.5px;
             font-weight: 500;
             color: #4b5563; /* Light mode label as default */
-            
+
             /* Dark mode label color */
             :host-context(.dark) & {
               color: rgba(255, 255, 255, 0.8);
             }
           }
-          
+
           .info-value {
             display: inline;
             font-weight: 600;
             font-size: 1.1rem;
             color: #111827; /* Light mode value as default */
-            
+
             /* Dark mode value color */
             :host-context(.dark) & {
               color: white;
             }
           }
-          
+
           .info-description {
             margin: 0.5rem 0 0 0;
             line-height: 1.6;
@@ -419,7 +419,7 @@
             font-size: 1rem;
             display: block;
             color: #374151; /* Light mode description as default */
-            
+
             /* Dark mode description color */
             :host-context(.dark) & {
               color: rgba(255, 255, 255, 0.9);
@@ -427,7 +427,7 @@
             }
           }
         }
-        
+
         // Special case for description containers - keep label and description stacked
         &.description-container .info-content {
           .info-label {
@@ -438,13 +438,13 @@
         }
       }
     }
-    
+
     // SVG Icon Styles
     .icon-svg {
       width: 20px;
       height: 20px;
     }
-    
+
     .register-btn {
       width: 100%;
       background: linear-gradient(135deg, #3a72ec, #8b5cf6);
@@ -459,13 +459,13 @@
       margin-top: 0.5rem;
       box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3);
       text-transform: none;
-      
+
       &:hover:not(:disabled) {
         transform: translateY(-2px);
         box-shadow: 0 12px 40px rgba(255, 107, 107, 0.4);
         background: linear-gradient(135deg, #3a72ec, #d255ff);
       }
-      
+
       &:disabled {
         opacity: 0.7;
         cursor: not-allowed;
@@ -482,14 +482,14 @@
     overflow: hidden;
     margin-bottom: 2rem;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    
+
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
   }
-  
+
   .mobile-details {
     background: rgba(255, 255, 255, 0.9); /* Light mode mobile details as default */
     backdrop-filter: blur(20px);
@@ -497,7 +497,7 @@
     padding: 2rem 1.5rem;
     border: 1px solid rgba(0, 0, 0, 0.1); /* Light mode border */
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-    
+
     /* Dark mode mobile details */
     :host-context(.dark) & {
       background: rgba(255, 255, 255, 0.1);
@@ -529,7 +529,7 @@
   border-radius: 20px;
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.15),
     0 4px 16px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
@@ -539,41 +539,41 @@
   overflow-y: auto;
   padding: 2rem;
   margin-top: 8rem;
-  
+
   /* Dark mode modal */
   :host-context(.dark) & {
     background: rgba(58, 114, 236, 0.15);
     border: 1px solid rgba(58, 114, 236, 0.25);
-    box-shadow: 
+    box-shadow:
       0 8px 32px rgba(0, 0, 0, 0.2),
       0 4px 16px rgba(0, 0, 0, 0.1),
       0 2px 8px rgba(58, 114, 236, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
-  
+
   .modal-header {
     text-align: center;
     margin-bottom: 2rem;
     position: relative;
-    
+
     h2 {
       color: #111827; /* Light mode modal title as default */
       font-size: 1.8rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
-      
+
       /* Dark mode modal title */
       :host-context(.dark) & {
         color: white;
       }
     }
-    
+
     .modal-subtitle {
       color: #3A72EC; /* Brand color remains same for consistency */
       font-size: 1rem;
       margin: 0;
     }
-    
+
     .modal-close {
       position: absolute;
       top: -10px;
@@ -585,35 +585,35 @@
       cursor: pointer;
       opacity: 0.7;
       transition: opacity 0.2s;
-      
+
       /* Dark mode close button */
       :host-context(.dark) & {
         color: white;
       }
-      
+
       &:hover {
         opacity: 1;
       }
     }
   }
-  
+
   .registration-form {
     .form-field {
       margin-bottom: 1.5rem;
-      
+
       label {
         display: block;
         color: #374151; /* Light mode label as default */
         font-size: 0.9rem;
         font-weight: 500;
         margin-bottom: 0.5rem;
-        
+
         /* Dark mode label */
         :host-context(.dark) & {
           color: white;
         }
       }
-      
+
       input {
         width: 100%;
         padding: 0.75rem 1rem;
@@ -623,35 +623,35 @@
         color: #111827; /* Light mode text */
         font-size: 0.95rem;
         transition: all 0.3s ease;
-        
+
         /* Dark mode input */
         :host-context(.dark) & {
           background: rgba(0, 0, 0, 0.3);
           border: 1px solid rgba(255, 255, 255, 0.2);
           color: white;
         }
-        
+
         &::placeholder {
           color: rgba(107, 114, 128, 0.7); /* Light mode placeholder as default */
-          
+
           /* Dark mode placeholder */
           :host-context(.dark) & {
             color: rgba(255, 255, 255, 0.5);
           }
         }
-        
+
         &:focus {
           outline: none;
           border-color: #3A72EC;
           box-shadow: 0 0 0 3px rgba(58, 114, 236, 0.1);
         }
-        
+
         &.error {
           border-color: #ef4444;
           box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
         }
       }
-      
+
       .error-message {
         color: #fca5a5;
         font-size: 0.8rem;
@@ -659,7 +659,7 @@
         display: block;
       }
     }
-    
+
     .event-fee-display {
       background: linear-gradient(135deg, #9333ea 0%, #3b82f6 100%);
       border-radius: 12px;
@@ -668,24 +668,24 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      
+
       &.compact {
         padding: 0.75rem;
         margin: 1rem 0;
       }
-      
+
       .fee-icon-small {
         color: white;
         fill: currentColor;
         flex-shrink: 0;
       }
-      
+
       .fee-content-compact {
         display: flex;
         flex-direction: column;
         align-items: center;
         flex: 1;
-        
+
         .fee-label-small {
           font-size: 0.75rem;
           font-weight: 500;
@@ -695,14 +695,14 @@
           text-transform: uppercase;
           letter-spacing: 0.5px;
         }
-        
+
         .fee-value-large {
           font-size: 1.25rem;
           font-weight: 700;
           color: white;
         }
       }
-      
+
       // Legacy support for old structure
       .fee-amount {
         font-size: 0.8rem;
@@ -712,27 +712,27 @@
         margin-bottom: 0.25rem;
         letter-spacing: 1px;
       }
-      
+
       .fee-value {
         font-size: 2rem;
         font-weight: 700;
         color: white;
       }
     }
-    
+
     .helper-text {
       font-size: 0.8rem;
       color: rgba(75, 85, 99, 0.8); /* Light mode helper text as default */
       text-align: center;
       line-height: 1.4;
       margin: 1rem 0;
-      
+
       /* Dark mode helper text */
       :host-context(.dark) & {
         color: rgba(255, 255, 255, 0.7);
       }
     }
-    
+
     .submit-btn {
       width: 100%;
       background: linear-gradient(135deg, #9333ea 0%, #3b82f6 100%);
@@ -745,12 +745,12 @@
       cursor: pointer;
       transition: all 0.3s ease;
       margin-top: 1rem;
-      
+
       &:hover:not(:disabled) {
         transform: translateY(-2px);
         box-shadow: 0 8px 25px rgba(147, 51, 234, 0.3);
       }
-      
+
       &:disabled {
         opacity: 0.6;
         cursor: not-allowed;
@@ -769,13 +769,13 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
     text-align: center;
     max-width: 400px;
-    
+
     /* Dark mode success modal */
     :host-context(.dark) & {
       background: rgba(0, 0, 0, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.1);
     }
-    
+
     .success-content {
       .success-icon {
         width: 80px;
@@ -786,7 +786,7 @@
         align-items: center;
         justify-content: center;
         margin: 0 auto 1.5rem;
-        
+
         .icon-check::before {
           content: "✓";
           font-size: 2rem;
@@ -794,34 +794,34 @@
           font-weight: bold;
         }
       }
-      
+
       h2 {
         color: #111827; /* Light mode success title as default */
         font-size: 1.5rem;
         margin-bottom: 1rem;
-        
+
         /* Dark mode success title */
         :host-context(.dark) & {
           color: white;
         }
       }
-      
+
       .success-message {
         color: rgba(75, 85, 99, 0.9); /* Light mode success message as default */
         margin-bottom: 2rem;
         line-height: 1.5;
-        
+
         /* Dark mode success message */
         :host-context(.dark) & {
           color: rgba(255, 255, 255, 0.8);
         }
       }
-      
+
       .success-actions {
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        
+
         .download-btn {
           background: linear-gradient(135deg, #9333ea 0%, #3b82f6 100%);
           color: white;
@@ -836,17 +836,17 @@
           align-items: center;
           justify-content: center;
           gap: 0.5rem;
-          
+
           .icon-download::before {
             content: "⬇";
           }
-          
+
           &:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(147, 51, 234, 0.3);
           }
         }
-        
+
         .home-btn {
           background: transparent;
           color: rgba(107, 114, 128, 0.7); /* Light mode home button as default */
@@ -856,17 +856,17 @@
           font-size: 0.9rem;
           cursor: pointer;
           transition: all 0.3s ease;
-          
+
           &:hover {
             background: rgba(0, 0, 0, 0.05);
             color: #374151;
           }
-          
+
           /* Dark mode home button */
           :host-context(.dark) & {
             color: rgba(255, 255, 255, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            
+
             &:hover {
               background: rgba(255, 255, 255, 0.1);
               color: white;
@@ -874,20 +874,20 @@
           }
         }
       }
-      
+
       .participant-id {
         margin-top: 1.5rem;
         color: rgba(107, 114, 128, 0.7); /* Light mode participant ID as default */
         font-size: 0.8rem;
-        
+
         /* Dark mode participant ID */
         :host-context(.dark) & {
           color: rgba(255, 255, 255, 0.6);
         }
-        
+
         strong {
           color: #3A72EC;
-          
+
           /* Light mode strong text - keep brand color */
         }
       }
@@ -908,12 +908,12 @@
   .registration-container {
     padding-top: 70px;
   }
-  
+
   .registration-modal {
     padding: 1.5rem 1rem;
     margin: 1rem;
   }
-  
+
   .mobile-layout .mobile-details {
     padding: 1.5rem 1rem;
   }
@@ -936,26 +936,26 @@ input:focus-visible {
   .registration-container {
     padding-top: 120px; /* Adequate space below navbar on mobile */
   }
-  
+
   .desktop-layout {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .image-section .event-visual-card .event-image {
     aspect-ratio: 16/9; /* Better mobile ratio */
   }
-  
+
   .details-section .event-info .date-time-row {
     grid-template-columns: 1fr;
   }
-  
+
   .registration-modal {
     padding: 1.5rem 1rem;
     margin: 0.5rem;
     max-height: 95vh; /* Better mobile modal height */
   }
-  
+
   .modal-overlay {
     padding: 0.5rem; /* Better mobile modal spacing */
   }

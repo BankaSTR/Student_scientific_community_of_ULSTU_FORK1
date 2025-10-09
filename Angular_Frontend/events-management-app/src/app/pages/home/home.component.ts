@@ -64,13 +64,13 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   cursorTrail: Array<{id: number, x: number, y: number, emoji: string}> = [];
   particles: Array<{id: number, x: number, y: number, emoji: string, delay?: number}> = [];
 
-  // Speech bubble messages
+  // Приветственные сообщения для персонажа (русский, СНС УлГТУ)
   speechMessages = [
-    "Welcome to FestFlex! 🎉",
-    "Ready to explore amazing events? ✨",
-    "Click me for a surprise! 🎊",
-    "Let's find your perfect event! �",
-    "Join the celebration! �"
+    "Добро пожаловать в СНС УлГТУ! 🎓",
+    "Готовы к новым открытиям и науке? 🔬",
+    "Кликните на меня — будет сюрприз! ✨",
+    "Присоединяйтесь к нашим мероприятиям! 🗓️",
+    "Вместе мы создаём будущее науки! 🚀"
   ];
 
   // Emoji arrays for effects
@@ -79,28 +79,17 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // Event images array - 22 unique professional images
   eventImages = [
-    'assets/images/Event-Images/istockphoto-1166978137-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1175031702-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1300014142-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1349104991-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1371940128-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1443245439-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1450957578-640x640.avif',
-    'assets/images/Event-Images/istockphoto-1453378098-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1455935808-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1483272796-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1488588152-640x640.avif',
-    'assets/images/Event-Images/istockphoto-171592241-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-1979771761-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-2189800011-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-2189800037-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-2226813113-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-469711926-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-499517325-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-532256991-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-597958786-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-628483496-612x612.jpg',
-    'assets/images/Event-Images/istockphoto-944251112-612x612.jpg'
+    'assets/images/Image-Gallery/gallery-image-1.jpg',
+    'assets/images/Image-Gallery/gallery-image-2.jpg',
+    'assets/images/Image-Gallery/gallery-image-3.jpg',
+    'assets/images/Image-Gallery/gallery-image-4.jpg',
+    'assets/images/Image-Gallery/gallery-image-5.jpg',
+    'assets/images/Image-Gallery/gallery-image-6.jpg',
+    'assets/images/Image-Gallery/gallery-image-7.jpg',
+    'assets/images/Image-Gallery/gallery-image-8.jpg',
+    'assets/images/Image-Gallery/gallery-image-9.jpg',
+    'assets/images/Image-Gallery/gallery-image-10.jpg',
+    'assets/images/Image-Gallery/gallery-image-11.jpg',
   ];
 
   // Timer properties
@@ -273,10 +262,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private checkForAuthRedirect(): void {
     this.route.queryParams.subscribe(params => {
       if (params['showLogin'] === 'true' && params['feature'] && isPlatformBrowser(this.platformId)) {
-        const featureName = params['feature'] === 'calendar' ? 'Calendar' : 'Results';
+        const featureName = params['feature'] === 'calendar' ? 'Календарь' : 'Результаты';
         // Delay to ensure the component is fully loaded
         setTimeout(() => {
-          this.showLoginRequiredPopup(`access the ${featureName.toLowerCase()}`);
+          this.showLoginRequiredPopup(`доступ к ${featureName.toLowerCase()}`);
         }, 500);
       }
     });
@@ -452,14 +441,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onCharacterClick(): void {
-    // Trigger celebration animation
+    // Запуск анимации праздника
     this.triggerCelebration();
-
-    // Change speech bubble
-    this.speechBubbleText = "🎉 Thanks for clicking! Let's explore events together!";
+    // Русское сообщение для СНС УлГТУ
+    this.speechBubbleText = "🎉 Спасибо за интерес! Откройте для себя мероприятия СНС УлГТУ!";
     this.showSpeechBubble = true;
-
-    // Hide speech bubble after 3 seconds
     setTimeout(() => {
       this.showSpeechBubble = false;
     }, 3000);
@@ -589,7 +575,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.router.navigate(['/event-registration', event.event_id]);
     } else {
       // Show popup for login requirement
-      this.showLoginRequiredPopup('register for this event');
+      this.showLoginRequiredPopup('зарегистрироваться на это мероприятие');
     }
   }
 
@@ -598,7 +584,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.showCommentModal = true;
     } else {
       // Show popup for login requirement
-      this.showLoginRequiredPopup('comment on this post');
+      this.showLoginRequiredPopup('оставить комментарий к этому посту');
     }
   }
 
@@ -710,7 +696,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
             background-clip: text;
             position: relative;
             z-index: 1;
-          ">Login Required</h3>
+          ">Требуется вход</h3>
           <p style="
             color: var(--text-secondary, #64748b);
             margin-bottom: 2rem;
@@ -719,7 +705,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
             position: relative;
             z-index: 1;
           ">
-            You need to login to ${action}. Please sign in to continue and access this feature.
+            Необходимо войти в систему, чтобы ${action}. Пожалуйста, выполните вход, чтобы продолжить и получить доступ к этой функции.
           </p>
           <div style="display: flex; gap: 1rem; justify-content: center; position: relative; z-index: 1;">
             <button id="loginBtn" style="
@@ -735,7 +721,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
               box-shadow: 0 4px 15px rgba(58, 114, 236, 0.3);
               position: relative;
               overflow: hidden;
-            ">Sign In</button>
+            ">Войти</button>
             <button id="closeBtn" style="
               background: var(--glass-bg, rgba(255, 255, 255, 0.1));
               color: var(--text-secondary, #64748b);
@@ -747,7 +733,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
               font-size: 1rem;
               transition: all 0.3s ease;
               backdrop-filter: blur(15px);
-            ">Cancel</button>
+            ">Отмена</button>
           </div>
         </div>
       </div>
@@ -878,7 +864,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
             background-clip: text;
             position: relative;
             z-index: 1;
-          ">Event Calendar</h3>
+          ">Календарь событий</h3>
           <p style="
             color: var(--text-secondary, #64748b);
             margin-bottom: 2rem;
@@ -887,7 +873,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
             position: relative;
             z-index: 1;
           ">
-            View all upcoming events in our interactive calendar. Stay updated with the latest event schedules and never miss an important date!
+            Просмотрите все предстоящие события в нашем интерактивном календаре. Будьте в курсе последних расписаний событий и не пропустите важные даты!
           </p>
           <div style="display: flex; gap: 1rem; justify-content: center; position: relative; z-index: 1;">
             <button id="openCalendarBtn" style="
@@ -903,7 +889,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
               box-shadow: 0 4px 15px rgba(58, 114, 236, 0.3);
               position: relative;
               overflow: hidden;
-            ">Open Calendar</button>
+            ">Открыть календарь</button>
             <button id="closeCalendarBtn" style="
               background: var(--glass-bg, rgba(255, 255, 255, 0.1));
               color: var(--text-secondary, #64748b);
@@ -915,7 +901,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
               font-size: 1rem;
               transition: all 0.3s ease;
               backdrop-filter: blur(15px);
-            ">Close</button>
+            ">Закрыть</button>
           </div>
         </div>
       </div>
@@ -1100,14 +1086,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     return months[date.getMonth()];
   }
 
-  // Format event date for display
-  formatEventDate(dateStr: string): string {
-    const date = new Date(dateStr);
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const months = ['January', 'February', 'March', 'April', 'May', 'June',
-                   'July', 'August', 'September', 'October', 'November', 'December'];
-
-    return `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+  // Форматирование дат событий на русском языке
+  formatEventDate(dateString: string): string {
+    const date = new Date(dateString);
+    return isNaN(date.getTime()) ? '' : date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
   }
 
   // Get attendee avatars (mock data for now)
@@ -1128,7 +1110,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.router.navigate(['/event-registration', event.event_id]);
     } else {
       // Show popup for login requirement
-      this.showLoginRequiredPopup('view details for this event');
+      this.showLoginRequiredPopup('просмотреть детали этого события');
     }
   }
 
@@ -1179,10 +1161,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Get display images for events conducted card
   getEventsDisplayImages(): string[] {
     const selectedImages = [
-      'assets/images/Event-Images/istockphoto-1166978137-612x612.jpg',
-      'assets/images/Event-Images/istockphoto-1349104991-612x612.jpg',
-      'assets/images/Event-Images/istockphoto-1371940128-612x612.jpg',
-      'assets/images/Event-Images/istockphoto-2189800011-612x612.jpg'
+      'assets/images/Image-Gallery/gallery-image-5.jpg',
+      'assets/images/Image-Gallery/gallery-image-7.jpg',
+      'assets/images/Image-Gallery/gallery-image-8.jpg',
+      'assets/images/Image-Gallery/gallery-image-9.jpg'
     ];
     return selectedImages;
   }

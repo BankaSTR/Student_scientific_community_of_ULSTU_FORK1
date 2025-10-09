@@ -15,6 +15,7 @@ export interface Event {
   club?: Club;
   judge?: Judge;
   eventPhotoUrl?: string; // Новое поле для фото мероприятия
+  imageUrl?: string; // Добавлено свойство для URL изображения мероприятия
 }
 
 export interface Venue {

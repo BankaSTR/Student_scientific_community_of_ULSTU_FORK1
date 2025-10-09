@@ -16,9 +16,10 @@
         <div class="event-visual-card">
           <div class="event-image">
             <!-- Используется изображение мероприятия из главного компонента -->
-            <img [src]="getEventImage(event.event_id)"
+            <img [src]="event.imageUrl || getEventImage(event.event_id)"
                  [alt]="event.event_name + ' изображение мероприятия'"
-                 onerror="this.src='/assets/images/default-event.svg'">
+                 onerror="this.src='/assets/images/default-event.svg'"
+                 style="max-width: 100%; height: auto; object-fit: cover;">
           </div>
         </div>
       </div>
@@ -44,7 +45,6 @@
                   <div class="info-content">
                     <span class="info-label">Даты:</span>
                     <span class="info-value">
-                      {{formatDate(event.event_start_date)}}
                       <span *ngIf="event.event_end_date && event.event_end_date !== event.event_start_date">
                         по {{formatDate(event.event_end_date)}}
                       </span>
@@ -147,7 +147,7 @@
     <div class="mobile-layout">
       <!-- Мобильный контент будет располагаться вертикально -->
       <div class="mobile-image">
-        <img [src]="getEventImage(event.event_id)"
+        <img [src]="event.imageUrl || getEventImage(event.event_id)"
              [alt]="event.event_name + ' изображение мероприятия'"
              onerror="this.src='/assets/images/default-event.svg'">
       </div>
