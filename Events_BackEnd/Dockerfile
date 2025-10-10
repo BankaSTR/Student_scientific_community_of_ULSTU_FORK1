@@ -1,13 +1,12 @@
-# Dockerfile для Spring Boot (WAR)
-FROM tomcat:10-jdk17-temurin
-LABEL maintainer="FestFlex Team"
+# Dockerfile для Angular
+FROM node:20 AS build
+WORKDIR /app
+COPY ../Angular_Frontend/events-management-app .
+RUN npm ci && npm run build -- --configuration=production
 
-# Удаляем стандартные приложения Tomcat
-RUN rm -rf /usr/local/tomcat/webapps/*
-
-# Копируем собранный WAR-файл
-COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
-
-EXPOSE 8080
-CMD ["catalina.sh", "run"]
+FROM nginx:stable-alpine
+COPY --from=build /app/dist/events-management-app /usr/share/nginx/html
+COPY ../Angular_Frontend/events-management-app/public/favicon.ico /usr/share/nginx/html/favicon.ico
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
 
