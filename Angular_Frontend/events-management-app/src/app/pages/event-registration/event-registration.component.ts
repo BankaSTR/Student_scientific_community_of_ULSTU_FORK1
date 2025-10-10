@@ -163,7 +163,7 @@ export class EventRegistrationComponent implements OnInit, OnDestroy {
     if (!dateStr) return '';
     try {
       const date = new Date(dateStr);
-      return date.toLocaleDateString('en-US', {
+      return date.toLocaleDateString('ru-RU', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
@@ -176,21 +176,31 @@ export class EventRegistrationComponent implements OnInit, OnDestroy {
   formatTime(timeStr: string): string {
     if (!timeStr) return '';
     try {
-      // Check if the time already has AM/PM
-      if (timeStr.toLowerCase().includes('am') || timeStr.toLowerCase().includes('pm')) {
-        return timeStr; // Return as-is if already formatted
+      // Если время уже в 24-часовом формате, возвращаем как есть
+      let time = timeStr.trim();
+
+      // Проверяем, содержит ли время AM/PM
+      const hasAmPm = time.toLowerCase().includes('am') || time.toLowerCase().includes('pm');
+
+      if (!hasAmPm) {
+        return time; // Возвращаем как есть, если нет AM/PM
       }
 
-      // Handle 24-hour format conversion
-      let time = timeStr.trim();
-      if (time.includes(':')) {
-        const [hours, minutes] = time.split(':');
-        const hour24 = parseInt(hours);
-        const hour12 = hour24 === 0 ? 12 : hour24 > 12 ? hour24 - 12 : hour24;
-        const ampm = hour24 >= 12 ? 'PM' : 'AM';
-        return `${hour12}:${minutes} ${ampm}`;
+      // Конвертируем из 12-часового в 24-часовой формат
+      time = time.toLowerCase();
+      let [timePart, modifier] = time.split(' ');
+      let [hours, minutes] = timePart.split(':');
+
+      let hourInt = parseInt(hours);
+
+      if (modifier === 'pm' && hourInt < 12) {
+        hourInt += 12;
+      } else if (modifier === 'am' && hourInt === 12) {
+        hourInt = 0;
       }
-      return time;
+
+      // Форматируем в 24-часовой формат
+      return `${hourInt.toString().padStart(2, '0')}:${minutes}`;
     } catch {
       return timeStr;
     }

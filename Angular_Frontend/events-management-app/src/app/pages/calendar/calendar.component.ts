@@ -177,20 +177,40 @@ export class CalendarComponent implements OnInit, OnDestroy {
     if (!time) return '';
 
     try {
-      // Check if time already contains AM/PM
-      if (time.includes('AM') || time.includes('PM') || time.includes('am') || time.includes('pm')) {
-        return time; // Return as-is if already formatted
+      // Remove any AM/PM indicators
+      let cleanTime = time.replace(/\s*(AM|PM|am|pm)\s*/gi, '').trim();
+
+      // If time is already in HH:mm format, return as is
+      if (cleanTime.match(/^\d{1,2}:\d{2}$/)) {
+        const [hours, minutes] = cleanTime.split(':');
+        return `${hours.padStart(2, '0')}:${minutes}`;
       }
 
-      // Assume time is in HH:mm:ss format
-      const [hours, minutes] = time.split(':');
-      const hour = parseInt(hours, 10);
-      const minute = minutes || '00';
-      const ampm = hour >= 12 ? 'PM' : 'AM';
-      const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+      // If time is in HH:mm:ss format, remove seconds
+      if (cleanTime.match(/^\d{1,2}:\d{2}:\d{2}$/)) {
+        const [hours, minutes] = cleanTime.split(':');
+        return `${hours.padStart(2, '0')}:${minutes}`;
+      }
 
-      return `${displayHour}:${minute} ${ampm}`;
+      // Handle 12-hour format conversion if needed
+      if (time.includes('AM') || time.includes('PM') || time.includes('am') || time.includes('pm')) {
+        const [timePart, modifier] = time.split(' ');
+        let [hours, minutes] = timePart.split(':');
+
+        let hourInt = parseInt(hours, 10);
+
+        if (modifier && (modifier.toLowerCase() === 'pm' || modifier.toLowerCase() === 'pm')) {
+          if (hourInt < 12) hourInt += 12;
+        } else if (modifier && (modifier.toLowerCase() === 'am' || modifier.toLowerCase() === 'am')) {
+          if (hourInt === 12) hourInt = 0;
+        }
+
+        return `${hourInt.toString().padStart(2, '0')}:${(minutes || '00').padStart(2, '0')}`;
+      }
+
+      return cleanTime;
     } catch (error) {
+      console.warn('Error formatting time:', time, error);
       return time;
     }
   }
@@ -510,7 +530,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   formatEventDate(dateStr: string): string {
     try {
       const date = new Date(dateStr);
-      return date.toLocaleDateString('en-US', {
+      return date.toLocaleDateString('ru-RU', {
         month: 'short',
         day: 'numeric'
       });

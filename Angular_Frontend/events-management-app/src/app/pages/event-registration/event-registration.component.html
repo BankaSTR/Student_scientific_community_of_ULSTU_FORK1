@@ -16,14 +16,13 @@
         <div class="event-visual-card">
           <div class="event-image">
             <!-- Используется изображение мероприятия из главного компонента -->
-            <img [src]="event.imageUrl || getEventImage(event.event_id)"
+            <img [src]="event?.eventPhotoUrl || getEventImage(event.event_id)"
                  [alt]="event.event_name + ' изображение мероприятия'"
                  onerror="this.src='/assets/images/default-event.svg'"
                  style="max-width: 100%; height: auto; object-fit: cover;">
           </div>
         </div>
       </div>
-
       <!-- Правая колонка - Детали мероприятия -->
       <div class="details-section">
         <div class="event-details-card">
@@ -45,9 +44,11 @@
                   <div class="info-content">
                     <span class="info-label">Даты:</span>
                     <span class="info-value">
+        {{formatDate(event.event_start_date)}}
                       <span *ngIf="event.event_end_date && event.event_end_date !== event.event_start_date">
-                      </span>
-                    </span>
+          по {{formatDate(event.event_end_date)}}
+        </span>
+      </span>
                   </div>
                 </div>
               </div>
@@ -118,15 +119,15 @@
               </div>
             </div>
 
-            <!-- Контейнер стоимости участия -->
-            <div class="info-container fee-container">
-              <div class="event-fee-highlight">
-                <div class="fee-content">
-                  <span class="fee-label">Стоимость участия</span>
-                  <span class="fee-amount">{{formatEventFee(eventFee)}}</span>
-                </div>
-              </div>
-            </div>
+<!--            &lt;!&ndash; Контейнер стоимости участия &ndash;&gt;-->
+<!--            <div class="info-container fee-container">-->
+<!--              <div class="event-fee-highlight">-->
+<!--                <div class="fee-content">-->
+<!--                  <span class="fee-label">Стоимость участия</span>-->
+<!--                  <span class="fee-amount">{{formatEventFee(eventFee)}}</span>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
 
           </div>
 
@@ -311,12 +312,12 @@
         </div>
 
         <!-- Отображение стоимости участия -->
-        <div class="event-fee-display compact">
-          <div class="fee-content-compact">
-            <span class="fee-label-small">Регистрационный взнос</span>
-            <span class="fee-value-large">{{formatEventFee(eventFee)}}</span>
-          </div>
-        </div>
+<!--        <div class="event-fee-display compact">-->
+<!--          <div class="fee-content-compact">-->
+<!--            <span class="fee-label-small">Регистрационный взнос</span>-->
+<!--            <span class="fee-value-large">{{formatEventFee(eventFee)}}</span>-->
+<!--          </div>-->
+<!--        </div>-->
 
         <!-- Вспомогательный текст -->
         <p class="helper-text">
@@ -368,11 +369,6 @@
       </div>
 
     </div>
-  </div>
-
-  <!-- Блок фотографии мероприятия -->
-  <div class="event-photo-block" *ngIf="event?.eventPhotoUrl">
-    <img [src]="event?.eventPhotoUrl" alt="Фото мероприятия" class="event-photo" />
   </div>
 
 </div>

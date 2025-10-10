@@ -1,13 +1,13 @@
-<!-- Admin Dashboard -->
+<!-- Админ-панель -->
 <div class="admin-dashboard">
 
-  <!-- Module Header -->
+  <!-- Заголовок модуля -->
   <div class="module-header">
-    <h1>Admin Dashboard</h1>
-    <p class="module-note">Overview of your event management platform</p>
+    <h1>Админ-панель</h1>
+    <p class="module-note">Обзор вашей платформы управления мероприятиями</p>
   </div>
 
-  <!-- Loading State -->
+  <!-- Состояние загрузки -->
   <div *ngIf="loading" class="loading-container">
     <div class="loading-spinner">
       <svg width="40" height="40" viewBox="0 0 24 24">
@@ -17,56 +17,57 @@
         </circle>
       </svg>
     </div>
-    <p>Loading dashboard data...</p>
+    <p>Загрузка данных панели...</p>
   </div>
 
-  <!-- Error State -->
+  <!-- Состояние ошибки -->
   <div *ngIf="error && !loading" class="error-container">
     <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
       <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
       <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" stroke-width="2"/>
       <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" stroke-width="2"/>
     </svg>
-    <h3>Unable to Load Dashboard</h3>
+    <h3>Не удалось загрузить панель</h3>
     <p>{{ error }}</p>
-    <button (click)="refreshData()" class="retry-btn">Try Again</button>
+    <button (click)="refreshData()" class="retry-btn">Повторить попытку</button>
   </div>
 
-  <!-- Dashboard Content -->
+  <!-- Содержимое панели -->
   <div class="dashboard-content">
 
-    <!-- Welcome Banner -->
+    <!-- Приветственный баннер -->
     <div class="welcome-banner">
-      <!-- Floating Sync Button -->
+      <!-- Плавающая кнопка синхронизации -->
       <button class="sync-btn" (click)="refreshData()" [disabled]="loading">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" [class.spinning]="loading">
           <path d="M23 4v6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        Sync
+        Синхронизировать
       </button>
 
       <div class="welcome-content">
-        <h1 class="welcome-title">Welcome back!</h1>
-        <p class="welcome-subtitle">Here's your platform overview and recent activities.</p>
+        <h1 class="welcome-title">С возвращением!</h1>
+        <p class="welcome-subtitle">Здесь вы видите обзор платформы и последние действия.</p>
         <div class="welcome-actions">
           <button class="action-btn secondary">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
               <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
             </svg>
-            Recent Activity
+            Последние действия
           </button>
         </div>
       </div>
     </div>
-    <!-- First Row Count Cards -->
+    <!-- Первая строка карточек-счетчиков -->
     <div class="count-cards-grid first-row">
       <div class="count-card" *ngFor="let entity of entityCounts.slice(0, 4); trackBy: trackByEntityName"
-           [attr.data-entity]="entity.name.toLowerCase()">
+           [attr.data-entity]="entity.name.toLowerCase()"
+           [ngStyle]="{'background-color': entity.color}">
         <div class="count-content">
           <div class="count-info">
             <span class="count-number">{{ entity.count | number }}</span>
-            <span class="count-label">{{ entity.name.toUpperCase() }}</span>
+            <span class="count-label">{{ entity.name }}</span>
             <span class="count-description">{{ getEntityDescription(entity.name) }}</span>
           </div>
           <div class="count-icon-container">
@@ -97,14 +98,14 @@
       </div>
     </div>
 
-    <!-- Dashboard Analytics Section -->
+    <!-- Аналитика панели -->
     <div class="dashboard-middle-section">
       <div class="analytics-overview">
         <div class="analytics-card chart-card">
           <div class="chart-container">
             <div class="chart-header">
-              <h4 class="chart-title">Monthly Event Registrations</h4>
-              <span class="chart-subtitle">Last 6 Months Trend</span>
+              <h4 class="chart-title">Ежемесячные регистрации на мероприятия</h4>
+              <span class="chart-subtitle">Тренд за последние 6 месяцев</span>
             </div>
             <svg class="line-chart" viewBox="0 0 800 300" preserveAspectRatio="xMidYMid meet">
               <!-- Grid lines -->
@@ -186,7 +187,7 @@
       </div>
 
       <div class="recent-activity">
-        <h3>Recent Activity</h3>
+        <h3>Последние действия</h3>
         <div class="activity-list" *ngIf="!loading && recentActivities.length > 0">
           <div class="activity-item" *ngFor="let activity of recentActivities.slice(0, 5); trackBy: trackByActivityId">
             <div class="activity-icon">
@@ -202,19 +203,20 @@
           </div>
         </div>
         <div class="no-activities" *ngIf="!loading && recentActivities.length === 0">
-          <p>No recent activities found.</p>
+          <p>Недавние действия не найдены.</p>
         </div>
       </div>
     </div>
 
-    <!-- Second Row Count Cards -->
+    <!-- Вторая строка карточек-счетчиков -->
     <div class="count-cards-grid second-row">
       <div class="count-card" *ngFor="let entity of entityCounts.slice(4, 12); trackBy: trackByEntityName"
-           [attr.data-entity]="entity.name.toLowerCase()">
+           [attr.data-entity]="entity.name.toLowerCase()"
+           [ngStyle]="{'background-color': entity.color}">
         <div class="count-content">
           <div class="count-info">
             <span class="count-number">{{ entity.count | number }}</span>
-            <span class="count-label">{{ entity.name.toUpperCase() }}</span>
+            <span class="count-label">{{ entity.name }}</span>
             <span class="count-description">{{ getEntityDescription(entity.name) }}</span>
           </div>
           <div class="count-icon-container">
@@ -252,7 +254,7 @@
 
               <!-- Scale Icon (Judges) - Position 10 -->
               <svg *ngIf="entity.icon === 'scale'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5.03v.02c0 .684-.504 1.279-1.197 1.371a50.63 50.63 0 01-11.106 0C5.704 6.322 5.2 5.727 5.2 5.043v-.02m13.5.03v-1.34m-13.5 1.34v-1.34M13.5 11.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-3 1.5a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0012 4.5c-2.291 0-4.545.16-6.75.47m13.5.03v.02c0 .684-.504 1.279-1.197 1.371a50.63 50.63 0 01-11.106 0C5.704 6.322 5.2 5.727 5.2 5.043v-.02m13.5.03v-1.34m-13.5 1.34v-1.34M13.5 11.5a1.5 1.5 0 100 3 1.5 1.5 0 000-3zm-3 1.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm6 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
               </svg>
 
               <!-- Message Circle Icon (Feedback) - Position 11 -->

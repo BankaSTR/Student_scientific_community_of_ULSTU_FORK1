@@ -1158,6 +1158,24 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  formatCommentDate(dateValue: string | Date): string {
+    if (!dateValue) return '';
+
+    const date = new Date(dateValue);
+
+    if (isNaN(date.getTime())) return '';
+
+    // Русский формат: "15 января 2024, 14:30"
+    return date.toLocaleDateString('ru-RU', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false // 24-часовой формат
+    });
+  }
+
   // Get display images for events conducted card
   getEventsDisplayImages(): string[] {
     const selectedImages = [

@@ -181,7 +181,7 @@
           </div>
           <div class="comment-info">
             <h4 class="comment-author">{{ comment.userName }}</h4>
-            <span class="comment-date">{{ comment.dateTime | date: 'short' }}</span>
+            <span class="comment-date">{{ formatCommentDate(comment.dateTime) }}</span>
           </div>
         </div>
         <p class="comment-content">{{ comment.content }}</p>
