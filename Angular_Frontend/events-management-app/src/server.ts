@@ -1,46 +1,48 @@
-import {
-  AngularNodeAppEngine,
-  createNodeRequestHandler,
-  isMainModule,
-  writeResponseToNodeResponse,
-} from '@angular/ssr/node';
-import express, { Request } from 'express';
-import { join } from 'node:path';
+import { renderApplication } from '@angular/platform-server';
+import { AppComponent } from './app/app.component';
+import { appConfig } from './app/app.config';
+import { provideRouter } from '@angular/router';
+import { routes } from './app/app.routes';
+import { bootstrapApplication } from '@angular/platform-browser';
+import express from 'express';
+import { join } from 'path';
 
-const browserDistFolder = join(import.meta.dirname, '../browser');
+// Enable production mode
+import { enableProdMode } from '@angular/core';
+enableProdMode();
 
 const app = express();
-const angularApp = new AngularNodeAppEngine();
+const port = process.env['PORT'] || 4000;
 
-// Serve static files from /browser
-app.use(
-  express.static(browserDistFolder, {
-    maxAge: '1y',
-    index: false,
-    redirect: false,
-  }),
-);
+// Serve static files
+app.use(express.static(join(process.cwd(), 'browser'), {
+  maxAge: '1y'
+}));
 
-// Handle all other requests by rendering the Angular application
-app.use((req: Request, res, next) => {
-  angularApp
-    .handle(req)
-    .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next(),
-    )
-    .catch(next);
+// Handle all requests
+app.get('*', async (req, res) => {
+  try {
+    const html = await renderApplication(() => bootstrapApplication(AppComponent, {
+      ...appConfig,
+      providers: [
+        ...(appConfig.providers || []),
+        provideRouter(routes)
+      ]
+    }), {
+      document: '<app-root></app-root>',
+      url: req.url
+    });
+
+    res.status(200).send(html);
+  } catch (error) {
+    console.error('Error during rendering:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
-// Start the server if this module is the main entry point
-if (isMainModule(import.meta.url)) {
-  const port = process.env['PORT'] || 4000;
-  app.listen(port, (error?: Error) => {
-    if (error) {
-      throw error;
-    }
-    console.log(`Server running on http://localhost:${port}`);
-  });
-}
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+});
 
-// Export the request handler for serverless environments
-export default createNodeRequestHandler(app);
+export default app;
