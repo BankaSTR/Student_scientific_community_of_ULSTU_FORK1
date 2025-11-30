@@ -1,18 +1,20 @@
 import { RenderMode, ServerRoute } from '@angular/ssr';
 
 export const serverRoutes: ServerRoute[] = [
-  // Public static routes (good for SEO)
+  // Static pages (SEO-friendly prerender)
   { path: '', renderMode: RenderMode.Prerender },
   { path: 'home', renderMode: RenderMode.Prerender },
   { path: 'about', renderMode: RenderMode.Prerender },
   { path: 'gallery', renderMode: RenderMode.Prerender },
   { path: 'support', renderMode: RenderMode.Prerender },
   { path: 'feedback', renderMode: RenderMode.Prerender },
-  { path: 'calendar', renderMode: RenderMode.Prerender },
-  { path: 'results', renderMode: RenderMode.Prerender },
 
-  // Dynamic and auth routes (render on server at runtime)
+  // Dynamic and protected routes (server render at request time)
+  { path: 'results', renderMode: RenderMode.Server },
+  { path: 'calendar', renderMode: RenderMode.Server },
   { path: 'event-registration/:id', renderMode: RenderMode.Server },
+
+  // Auth
   { path: 'auth/signin', renderMode: RenderMode.Server },
   { path: 'auth/signup', renderMode: RenderMode.Server },
   { path: 'auth/student-login', renderMode: RenderMode.Server },
@@ -21,7 +23,7 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'auth/login', renderMode: RenderMode.Server },
   { path: 'auth/register', renderMode: RenderMode.Server },
 
-  // Admin area (handled on server; some may require auth)
+  // Admin area
   { path: 'admin', renderMode: RenderMode.Server },
   { path: 'admin/dashboard', renderMode: RenderMode.Server },
   { path: 'admin/help', renderMode: RenderMode.Server },
@@ -39,5 +41,8 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'admin/modules/feedbacks', renderMode: RenderMode.Server },
   { path: 'admin/modules/users', renderMode: RenderMode.Server },
   { path: 'admin/modules/admins', renderMode: RenderMode.Server },
-  { path: 'admin/modules/comments', renderMode: RenderMode.Server }
+  { path: 'admin/modules/comments', renderMode: RenderMode.Server },
+
+  // Fallback wildcard (matches client '**' route); must be Server, not Prerender
+  { path: '**', renderMode: RenderMode.Server }
 ];
