@@ -1,48 +1,64 @@
 import { renderApplication } from '@angular/platform-server';
 import { AppComponent } from './app/app.component';
-import { appConfig } from './app/app.config';
-import { provideRouter } from '@angular/router';
-import { routes } from './app/app.routes';
+import { config as serverAppConfig } from './app/app.config.server';
 import { bootstrapApplication } from '@angular/platform-browser';
 import express from 'express';
 import { join } from 'path';
-
-// Enable production mode
+import 'zone.js/node';
 import { enableProdMode } from '@angular/core';
+
+// Включаем продакшн-режим Angular
 enableProdMode();
 
 const app = express();
 const port = process.env['PORT'] || 4000;
 
-// Serve static files
-app.use(express.static(join(process.cwd(), 'browser'), {
-  maxAge: '1y'
-}));
+// Статика Angular
+app.use(
+  express.static(join(process.cwd(), 'browser'), {
+    maxAge: '1y',
+    index: false,
+    redirect: false
+  })
+);
 
-// Handle all requests
-app.get('*', async (req, res) => {
+// Функция проверки динамических маршрутов
+function shouldSkipSSR(url: string): boolean {
+  const skipSSRPaths = [
+    '/event-registration/', // динамический маршрут
+    '/admin/modules/'
+  ];
+  return skipSSRPaths.some(path => url.startsWith(path));
+}
+
+// Обработка всех запросов
+app.get(/.*/, async (req, res) => {
   try {
-    const html = await renderApplication(() => bootstrapApplication(AppComponent, {
-      ...appConfig,
-      providers: [
-        ...(appConfig.providers || []),
-        provideRouter(routes)
-      ]
-    }), {
-      document: '<app-root></app-root>',
-      url: req.url
-    });
+    // Пропускаем SSR для динамических страниц
+    if (shouldSkipSSR(req.url)) {
+      return res.sendFile(join(process.cwd(), 'browser', 'index.html'));
+    }
 
-    res.status(200).send(html);
+    // SSR для статических страниц
+    const html = await renderApplication(() =>
+        bootstrapApplication(AppComponent, serverAppConfig), {
+        document: '<app-root></app-root>',
+        url: req.url
+      }
+    );
+
+    res.status(200).set('Content-Type', 'text/html').send(html);
+
   } catch (error) {
-    console.error('Error during rendering:', error);
-    res.status(500).send('Internal Server Error');
+    console.error('Rendering error:', error);
+    // fallback на клиентскую сборку
+    res.sendFile(join(process.cwd(), 'browser', 'index.html'));
   }
 });
 
-// Start the server
+// Запуск сервера
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });
 
 export default app;
