@@ -5,7 +5,7 @@ FROM eclipse-temurin:17-jdk-jammy
 RUN apt-get update && apt-get install -y maven
 
 # Копируем исходный код
-COPY . /app
+COPY Events_BackEnd /app
 WORKDIR /app
 
 # Собираем приложение
