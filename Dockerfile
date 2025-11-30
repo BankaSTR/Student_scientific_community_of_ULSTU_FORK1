@@ -1,5 +1,5 @@
-# Используем образ с Java 17
-FROM eclipse-temurin:17-jdk-jammy
+# Используем образ с Java 21
+FROM eclipse-temurin:21-jdk-jammy
 
 # Устанавливаем Maven
 RUN apt-get update && apt-get install -y maven
