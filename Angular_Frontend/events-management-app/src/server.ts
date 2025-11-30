@@ -1,46 +1,64 @@
-import {
-  AngularNodeAppEngine,
-  createNodeRequestHandler,
-  isMainModule,
-  writeResponseToNodeResponse,
-} from '@angular/ssr/node';
-import express, { Request } from 'express';
-import { join } from 'node:path';
+import { renderApplication } from '@angular/platform-server';
+import { AppComponent } from './app/app.component';
+import { config as serverAppConfig } from './app/app.config.server';
+import { bootstrapApplication } from '@angular/platform-browser';
+import express from 'express';
+import { join } from 'path';
+import 'zone.js/node';
+import { enableProdMode } from '@angular/core';
 
-const browserDistFolder = join(import.meta.dirname, '../browser');
+// Включаем продакшн-режим Angular
+enableProdMode();
 
 const app = express();
-const angularApp = new AngularNodeAppEngine();
+const port = process.env['PORT'] || 4000;
 
-// Serve static files from /browser
+// Статика Angular
 app.use(
-  express.static(browserDistFolder, {
+  express.static(join(process.cwd(), 'browser'), {
     maxAge: '1y',
     index: false,
-    redirect: false,
-  }),
+    redirect: false
+  })
 );
 
-// Handle all other requests by rendering the Angular application
-app.use((req: Request, res, next) => {
-  angularApp
-    .handle(req)
-    .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next(),
-    )
-    .catch(next);
-});
-
-// Start the server if this module is the main entry point
-if (isMainModule(import.meta.url)) {
-  const port = process.env['PORT'] || 4000;
-  app.listen(port, (error?: Error) => {
-    if (error) {
-      throw error;
-    }
-    console.log(`Server running on http://localhost:${port}`);
-  });
+// Функция проверки динамических маршрутов
+function shouldSkipSSR(url: string): boolean {
+  const skipSSRPaths = [
+    '/event-registration/', // динамический маршрут
+    '/admin/modules/'
+  ];
+  return skipSSRPaths.some(path => url.startsWith(path));
 }
 
-// Export the request handler for serverless environments
-export default createNodeRequestHandler(app);
+// Обработка всех запросов
+app.get(/.*/, async (req, res) => {
+  try {
+    // Пропускаем SSR для динамических страниц
+    if (shouldSkipSSR(req.url)) {
+      return res.sendFile(join(process.cwd(), 'browser', 'index.html'));
+    }
+
+    // SSR для статических страниц
+    const html = await renderApplication(() =>
+        bootstrapApplication(AppComponent, serverAppConfig), {
+        document: '<app-root></app-root>',
+        url: req.url
+      }
+    );
+
+    res.status(200).set('Content-Type', 'text/html').send(html);
+
+  } catch (error) {
+    console.error('Rendering error:', error);
+    // fallback на клиентскую сборку
+    res.sendFile(join(process.cwd(), 'browser', 'index.html'));
+  }
+});
+
+// Запуск сервера
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
+
+export default app;

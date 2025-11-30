@@ -40,7 +40,7 @@ export const routes: Routes = [
   { path: 'feedback', component: FeedbackComponent },
   { path: 'results', component: ResultsComponent, canActivate: [authGuard] },
   { path: 'calendar', component: CalendarComponent, canActivate: [authGuard] },
-  { path: 'event-registration/:id', component: EventRegistrationComponent },
+  { path: 'event-registration/:id', component: EventRegistrationComponent},
   { path: 'auth/signin', component: SigninComponent },
   { path: 'auth/signup', redirectTo: 'auth/student-login', pathMatch: 'full' },
   { path: 'auth/student-login', component: StudentLoginComponent },
@@ -48,7 +48,7 @@ export const routes: Routes = [
   { path: 'auth/student-signup', redirectTo: 'auth/student-login', pathMatch: 'full' },
   { path: 'auth/login', redirectTo: 'auth/signin', pathMatch: 'full' },
   { path: 'auth/register', redirectTo: 'auth/student-login', pathMatch: 'full' },
-  
+
   // Admin Routes - Protected by adminGuard
   {
     path: 'admin',
@@ -77,6 +77,4 @@ export const routes: Routes = [
       // { path: 'recents', component: AdminRecentsComponent },
     ]
   },
-  
-  { path: '**', redirectTo: '' }
 ];
